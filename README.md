@@ -1,13 +1,13 @@
 # **MC322 - Turma B **
 
-**Aluno: **
+**Aluno:**
   Ludivik Eduardo Silva de Paula
   
-**RA: **
+**RA:**
   235075
 
-**Curso: **
+**Curso:**
   Engenharia de Computação
 
-
+**Descrição:**
 Atividades relacionadas a disciplina MC322
