@@ -6,4 +6,5 @@
  *
  */
 module Seguradora {
+	requires java.desktop;
 }
