@@ -10,6 +10,10 @@ public class Veiculo {
 		this.marca = marcaString;
 		this.modelo = modeloString;
 	}
+	
+	public String toString() {
+		return "[class: Veículo, placa: "+this.placa+", marca: "+this.marca+", modelo: "+this.modelo+"]";
+	}
 
 
 	public String getPlaca() {

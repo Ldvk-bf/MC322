@@ -6,6 +6,7 @@ import java.text.ParseException;
 import javax.swing.Box;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
@@ -24,6 +25,10 @@ public class Cliente {
 		this.dataNascimento = dataNascimentoString;
 		this.idade = idadeInt;
 		this.endereco = enderecoString;
+	}
+	
+	public Cliente() {
+		
 	}
 	
 	public boolean validarCPF() {
@@ -73,7 +78,7 @@ public class Cliente {
 	    }
 	}
 	
-	public static JPanel inputCliente() {
+	public static Cliente inputCliente() {
 		//mascara de formatação cpf
 		MaskFormatter mascaraCpf = null;
 		MaskFormatter mascaraDataNascimento = null;
@@ -117,7 +122,28 @@ public class Cliente {
 		myPanel.add(new JLabel("Endereço:"));
 		myPanel.add(endereco);
 		
-		return myPanel;
+		Cliente novoCliente = new Cliente();		
+		
+		int result = JOptionPane.showConfirmDialog(null, myPanel, 
+		         "Cadastro de cliente", JOptionPane.OK_CANCEL_OPTION);
+		
+		if (result == JOptionPane.OK_OPTION) {
+			novoCliente.cpf = cpf.getText();
+			novoCliente.dataNascimento = dataNascimento.getText();
+			novoCliente.endereco = endereco.getText();
+			novoCliente.idade = Integer.parseInt(idade.getText());
+			novoCliente.nome = nome.getText();
+			
+			System.out.println(novoCliente.toString());
+			
+		   return novoCliente;
+		}
+		
+		return null;
+	}
+	
+	public String toString() {
+		return "[class: Cliente, nome: "+this.nome+", cpf: "+this.cpf+", data de nascimento: "+this.dataNascimento+", idade: "+this.idade+", endereco: "+this.endereco+"]";
 	}
 	
 

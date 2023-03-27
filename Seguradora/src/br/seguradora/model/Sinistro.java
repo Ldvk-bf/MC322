@@ -17,6 +17,10 @@ public class Sinistro {
     	Random random = new Random();
 		this.id = random.nextInt(10000);
     }
+    
+    public String toString() {
+		return "[class: Sinistro, id: "+this.id+", data: "+this.data+", endereco: "+this.endereco+"]";
+	}
 
     public int getId() {
 		return id;

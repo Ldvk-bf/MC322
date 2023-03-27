@@ -14,6 +14,10 @@ public class Seguradora {
 		this . endereco = endereco ;
 	}
 	
+	public String toString() {
+		return "[class: Seguradora, nome: "+this.nome+", telefone: "+this.telefone+", email: "+this.email+", endereco: "+this.endereco+"]";
+	}
+	
 	// Getters e setters
 	public String getNome () {
 		return nome ;
