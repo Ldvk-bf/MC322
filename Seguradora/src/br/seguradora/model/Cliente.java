@@ -1,9 +1,9 @@
 package br.seguradora.model;
 
 import java.awt.GridLayout;
+
 import java.text.ParseException;
 
-import javax.swing.Box;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -110,7 +110,7 @@ public class Cliente {
 		myPanel.add(nome);
 		
 		
-		myPanel.add(new JLabel("cpf:"));
+		myPanel.add(new JLabel("Cpf:"));
 		myPanel.add(cpf);
 		
 		myPanel.add(new JLabel("Data de nascimento:"));
@@ -134,7 +134,6 @@ public class Cliente {
 			novoCliente.idade = Integer.parseInt(idade.getText());
 			novoCliente.nome = nome.getText();
 			
-			System.out.println(novoCliente.toString());
 			
 		   return novoCliente;
 		}
