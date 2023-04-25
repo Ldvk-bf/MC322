@@ -2,6 +2,7 @@ package br.seguradora.model;
 
 import java.awt.GridLayout;
 import java.text.ParseException;
+import java.util.Scanner;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -11,21 +12,103 @@ import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
 public class Veiculo {
+	
+	/* TODO: Class Seguradora
+	 *  
+	 *  1 - add new attributes (feito) -> (funcional
+	 * 	
+	 *  2 - UPDATE METHOD: jOptionalInputPaneSinistro()
+	 *  
+	 *  3 - UPDATE METHOD: toString() (feito) -> (Funcional)
+	 * 
+	 * /
+	
+	/* Assinatura dos metodos implementados
+	 * 
+	 * 
+	 * public static Veiculo jOptionalInputPaneVeiculo();
+	 * private void criarId()
+	 * public String toString();
+	 * 
+	 */
+	
+	
+	/* ANOTAÇÕES:
+	 * 
+	 * Rever o estado dessa variavel suspeita
+	 * 
+	 */
+	
 	private String placa;
 	private String marca;
 	private String modelo;
+	private int anoFabricacao;
 	
-	public Veiculo(String placaString, String marcaString, String modeloString) {
+	//Variável suspeita
+	private static Veiculo novoVeiculo;
+	
+	public Veiculo(String placaString, String marcaString, String modeloString, int anoFabricacaoInt) {
 		this.placa = placaString;
 		this.marca = marcaString;
 		this.modelo = modeloString;
+		this.anoFabricacao = anoFabricacaoInt;
 	}
-	
-	public Veiculo() {
+
+	public static Veiculo inputVeiculo(Scanner scanner) {
+		System.out.println("Cadastro de veículo, por favor informe:");
 		
+		System.out.println("Placa do veículo: ");
+		String placaString = scanner.nextLine();
+
+		System.out.println("Marca do veículo: ");
+		String marcaString = scanner.nextLine();
+		
+		System.out.println("Modelo do veículo: ");
+		String modeloString = scanner.nextLine();
+		
+		System.out.println("Ano de fabricação do veículo: ");
+		int anoFabricacaoString = scanner.nextInt();
+		
+		return new Veiculo(placaString, marcaString, modeloString, anoFabricacaoString);
 	}
 	
-	public static Veiculo inputVeiculo() {
+	public String toString() {
+		return "[class: Veículo, placa: "+this.placa+", marca: "+this.marca+", modelo: "+this.modelo+", ano de fabricação: "+this.anoFabricacao+"]";
+	}
+
+	public int getAnoFabricacao() {
+		return anoFabricacao;
+	}
+
+	public void setAnoFabricacao(int anoFabricacao) {
+		this.anoFabricacao = anoFabricacao;
+	}
+
+	public String getPlaca() {
+		return placa;
+	}
+
+	public void setPlaca(String placa) {
+		this.placa = placa;
+	}
+
+	public String getMarca() {
+		return marca;
+	}
+
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+
+	public String getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+	
+	public static Veiculo jOptionalInputPaneVeiculo() {
 		//mascara de formatação cpf
 		MaskFormatter mascaraPlaca = null;
 		
@@ -61,7 +144,7 @@ public class Veiculo {
 		myPanel.add(modelo);
 
 		
-		Veiculo novoVeiculo = new Veiculo();		
+		novoVeiculo = null;		
 		
 		int result = JOptionPane.showConfirmDialog(null, myPanel, 
 		         "Cadastro de veículo", JOptionPane.OK_CANCEL_OPTION);
@@ -75,35 +158,6 @@ public class Veiculo {
 		}
 		
 		return null;
-	}
-	
-	public String toString() {
-		return "[class: Veículo, placa: "+this.placa+", marca: "+this.marca+", modelo: "+this.modelo+"]";
-	}
-
-
-	public String getPlaca() {
-		return placa;
-	}
-
-	public void setPlaca(String placa) {
-		this.placa = placa;
-	}
-
-	public String getMarca() {
-		return marca;
-	}
-
-	public void setMarca(String marca) {
-		this.marca = marca;
-	}
-
-	public String getModelo() {
-		return modelo;
-	}
-
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
 	}
 	
 }
