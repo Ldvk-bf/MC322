@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
+import br.seguradora.util.Print;
+
 public class Veiculo {
 	
 	/* TODO: Class Seguradora
@@ -55,18 +57,20 @@ public class Veiculo {
 	}
 
 	public static Veiculo inputVeiculo(Scanner scanner) {
-		System.out.println("Cadastro de veículo, por favor informe:");
+		Print.tab("========================================================================================================================================================================================================================", 0);
+
+		Print.tab("Cadastro de veículo, por favor informe: ", 1);
 		
-		System.out.println("Placa do veículo: ");
+		Print.tab("Placa do veículo: ", 0);
 		String placaString = scanner.nextLine();
 
-		System.out.println("Marca do veículo: ");
+		Print.tab("Marca do veículo: ",0);
 		String marcaString = scanner.nextLine();
 		
-		System.out.println("Modelo do veículo: ");
+		Print.tab("Modelo do veículo: ",0);
 		String modeloString = scanner.nextLine();
 		
-		System.out.println("Ano de fabricação do veículo: ");
+		Print.tab("Ano de fabricação do veículo: ",0);
 		int anoFabricacaoString = scanner.nextInt();
 		
 		return new Veiculo(placaString, marcaString, modeloString, anoFabricacaoString);

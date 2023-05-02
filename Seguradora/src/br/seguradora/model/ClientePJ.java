@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
+import br.seguradora.util.Print;
+
 public class ClientePJ extends Cliente {
 	
 	/* TODO: Class ClientePJ
@@ -100,13 +102,29 @@ public class ClientePJ extends Cliente {
 	
 	 public static ClientePJ inputClientePJ(Scanner scanner) {
 		 Cliente novoCliente = Cliente.inputCliente(scanner);
+		 boolean valido = true;
+		 String cnpjString;
 		 
-		 System.out.println("Cadastro de pessoa juridica, por favor informe:");
+		 do {
+			 Print.tab("========================================================================================================================================================================================================================", 0);
 		 
-		 System.out.println("CNPJ da pessoa juridica:");
-		 String cnpjString = scanner.nextLine();
+			 Print.tab("Cadastro de pessoa juridica, por favor informe:",1);
+			 if(!valido)
+				 Print.tab("O Cnpj informado não eh valido, por favor informe novamente :D", 2);
+			 
+			 Print.tab("CNPJ da pessoa juridica:", 0);
+			 cnpjString = scanner.nextLine();			
+			 
+			 if(ClientePJ.validarCnpj(cnpjString)) {
+				 valido = true;
+			 } else {
+				 valido = false;
+			 }
+			 
+		 }while(!valido );
 		 
-		 System.out.println("Data fundacao da pessoa juridica (EX. 30-01-2000):");
+		 
+		 Print.tab("Data fundacao da pessoa juridica (EX. 30-01-2000):", 0);
 		 String dataFundacaoString = scanner.nextLine();
 		 
 		 return new ClientePJ(novoCliente.getNome(), novoCliente.getEndereco(), cnpjString, dataFundacaoString);

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import br.seguradora.util.Print;
+
 public class Cliente {
 	
 	/* TODO: Class Cliente
@@ -41,12 +43,13 @@ public class Cliente {
 	}
 	
 	public static Cliente inputCliente(Scanner scanner) {
-		System.out.println("Cadastro de cliente, por favor informe:");
+		Print.tab("========================================================================================================================================================================================================================", 0);
+		Print.tab("Cadastro de cliente, por favor informe:",1);
 		
-		System.out.println("Nome do cliente:");
+		Print.tab("Nome do cliente: ", 0);
 		String nomeString = scanner.nextLine();
 		
-		System.out.println("Endereco do cliente:");
+		Print.tab("Endereco do cliente: ", 0);
 		String enderecoString = scanner.nextLine();
 		
 		return new Cliente(nomeString, enderecoString);

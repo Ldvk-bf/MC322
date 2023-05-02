@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
+import br.seguradora.util.Print;
+
 public class ClientePF extends Cliente{
 	
 	/* TODO: Class ClientePF 
@@ -120,25 +122,41 @@ public class ClientePF extends Cliente{
 		 Cliente novoCliente = Cliente.inputCliente(scanner);
 		 
 		 //scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
-		 
-		 System.out.println("Cadastro de pessoa fisica, por favor informe:");
-		 
-		 System.out.println("CPF da pessoa física:");
-		 String cpfString = scanner.nextLine();
+		 boolean valido = true;
+		 String cpfString ;
+		 do {
+			 Print.tab("========================================================================================================================================================================================================================", 0);
 
-		 System.out.println("Genero da pessoa física:");
+			 Print.tab("Cadastro de pessoa fisica, por favor informe:", 1);
+			 if(!valido)
+				 Print.listItem("Por favor informe um cpf válido :D", 2);
+			 
+			 
+			 Print.tab("CPF da pessoa física:",0);
+			 cpfString = scanner.nextLine();
+			 
+			 if(ClientePF.validarCPF(cpfString)) {
+				 valido = true;
+			 } else {
+				 valido = false;
+			 }
+			 
+			 
+		 } while(!valido);
+
+		 Print.tab("Genero da pessoa física:", 0);
 		 String generoString = scanner.nextLine();
 
-		 System.out.println("Data de licenca da pessoa física (EX: 30-01-2000):");
+		 Print.tab("Data de licenca da pessoa física (EX: 30-01-2000):", 0);
 		 String dataLicencaString = scanner.nextLine();
 
-		 System.out.println("Educacao da pessoa física:");
+		 Print.tab("Educacao da pessoa física:", 0);
 		 String educacaoString = scanner.nextLine();
 
-		 System.out.println("Data de nascimento da pessoa física:");
+		 Print.tab("Data de nascimento da pessoa física:", 0);
 		 String dataNascimentoString = scanner.nextLine();
 		 
-		 System.out.println("Classe economica da pessoa física:");
+		 Print.tab("Classe economica da pessoa física:", 0);
 		 String classeEconomicaString = scanner.nextLine();
 		 
 		 return new ClientePF(novoCliente.getNome(), novoCliente.getEndereco(), generoString, cpfString, dataLicencaString, educacaoString, dataNascimentoString, classeEconomicaString);

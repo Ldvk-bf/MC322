@@ -2,6 +2,8 @@ package br.seguradora.model;
 
 import java.awt.GridLayout;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -12,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
+
+import br.seguradora.util.Print;
 
 public class Seguradora {
 	
@@ -68,8 +72,8 @@ public class Seguradora {
 	private String telefone ;
 	private String email ;
 	private String endereco ;
-	private List<Sinistro> listaSinistro ;
-	private Map<Cliente, Cliente.TipoDocumento> mapCliente ;
+	private List<Sinistro> listaSinistro = new ArrayList<Sinistro>();
+	private Map<Cliente, Cliente.TipoDocumento> mapCliente = new HashMap<Cliente, Cliente.TipoDocumento>();
 	
 	// Usada somente unica vez
 	private static Seguradora novoSeguradora;
@@ -96,24 +100,26 @@ public class Seguradora {
 	
 	// Como o tipo de parametro mostrado na descrição do lab, tive que fazer alguns ajustes para buscar.
 	public boolean removerCliente(String clienteSelecionado) {
+		boolean valido = false;
 		try {
-			this.mapCliente.forEach((chave, valor) -> {
-				if(chave.getNome() == clienteSelecionado) {
-					this.mapCliente.remove(chave);
-				}
-			});
+			for (Cliente chave : this.mapCliente.keySet()) {
+		        if (chave.getNome().equals(clienteSelecionado)) {
+		        	this.mapCliente.remove(chave);
+		            valido = true;
+		        }
+		    }
+			return valido;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Print.tab("Não houve exclusão", 0);
 			return false;
 		}
-		return true;
 	}
 	
 	public String listarClientes(String tipoCliente) {
 		try {
 			Cliente.TipoDocumento tipo;
-			tipo = tipoCliente.equals("cpf") ? Cliente.TipoDocumento.CPF : Cliente.TipoDocumento.CPF ;
+			tipo = tipoCliente.equals("cpf") ? Cliente.TipoDocumento.CPF : Cliente.TipoDocumento.CNPJ ;
 			
 			// Pela fé oq eu sofri pra descobrir isso eh brincadeira
 			final StringBuilder listaClienteStringBuilder = new StringBuilder();
@@ -132,22 +138,63 @@ public class Seguradora {
 		}
 	}
 	
-	public boolean gerarSinistro(Scanner scanner ) {
+	public boolean gerarSinistro(Scanner scanner) {
 		// série de inputs;
+		Print.tab("========================================================================================================================================================================================================================", 0);
+		Print.tab("Gerando sinistro", 1);
 		
-		System.out.println("Data da sinistro (Ex. 30-01-2005:");
+		Print.tab("Data da sinistro (Ex. 30-01-2005:", 0);
 		String dataString = scanner.nextLine();
 	
-		System.out.println("Endereco da seguradora:");
+		Print.tab("Endereco do sinistro:", 0);
 		String enderecoString = scanner.nextLine();
 
 		Seguradora seguradora = this;
 
-		Cliente novoCliente = Cliente.inputCliente(scanner);
+		Print.tab("========================================================================================================================================================================================================================", 0);
+		Print.tab("Escolha um cliente, e digite o seu nome", 1);
+		Print.tab("", 0);
+		Print.tab(this.listarClientes("cpf"), 0);
+		Print.tab("", 0);
+		Print.tab(this.listarClientes("cnpj"), 0);
+		Print.tab("", 0);
+		Print.tab("", 0);
 		
-		Veiculo novoVeiculo = Veiculo.inputVeiculo(scanner);
-
+		String nomeClienteString = scanner.nextLine();
+		Cliente novoCliente = new Cliente("", "");
+		boolean valido = false;
 		
+		for (Cliente chave : this.mapCliente.keySet()) {
+	        if (chave.getNome().equals(nomeClienteString)) {
+	        	novoCliente = chave;
+	        	valido = true;
+	        }
+	    }
+		
+		if(!valido)
+			return false;
+			
+		Print.tab("========================================================================================================================================================================================================================", 0);
+		Print.tab("Escolha um veiculo do cliente, e digite a sua placa", 1);
+		Print.tab("", 0);
+		Print.tab(novoCliente.listarVeiculos(), 0);
+		Print.tab("", 0);
+		Print.tab("", 0);
+		
+		String veiculoString = scanner.nextLine();
+		Veiculo novoVeiculo = new Veiculo("","","",0);
+		valido = false;
+		
+		for (Veiculo chave : novoCliente.getListaVeiculos()) {
+	        if (chave.getPlaca().equals(veiculoString)) {
+	        	novoVeiculo = chave;
+	        	valido = true;
+	        }
+	    }
+		
+		if(!valido)
+			return false;
+			
 		try {
 			Sinistro novoSinistro = new Sinistro(dataString, enderecoString, novoVeiculo, novoCliente, seguradora);
 			listaSinistro.add(novoSinistro);
@@ -168,7 +215,7 @@ public class Seguradora {
 		try {
 			final StringBuilder listaSinistroStringBuilder = new StringBuilder();
 			listaSinistro.forEach((valor) -> {
-				if(valor.getCliente().getNome() == clienteSelecionado) {
+				if(valor.getCliente().getNome().equals(clienteSelecionado)) {
 					listaSinistroStringBuilder .append(valor.toString()).append(", ");
 				}
 			});
@@ -205,19 +252,19 @@ public class Seguradora {
 	}
 	
 	 public static Seguradora inputSeguradora(Scanner scanner) {
+		 Print.tab("========================================================================================================================================================================================================================", 0);
+		 Print.tab("Cadastro de seguradora, por favor informe: ", 1);
 		 
-		 System.out.println("Cadastro de seguradora, por favor informe:");
-		 
-		 System.out.println("Nome da seguradora:");
+		 Print.labelInput("Nome da seguradora: ", 0);
 		 String nomeString = scanner.nextLine();
 		 
-		 System.out.println("Telefone da seguradora:");
+		 Print.labelInput("Telefone da seguradora: ", 0);
 		 String telefoneString = scanner.nextLine();
 		 
-		 System.out.println("Email da seguradora:");
+		 Print.labelInput("Email da seguradora: ", 0);
 		 String emailString = scanner.nextLine();
 
-		 System.out.println("Endereco da seguradora:");
+		 Print.labelInput("Endereco da seguradora: ", 0);
 		 String enderecoString = scanner.nextLine();
 		 
 		 return new Seguradora(nomeString, telefoneString, emailString, enderecoString);
