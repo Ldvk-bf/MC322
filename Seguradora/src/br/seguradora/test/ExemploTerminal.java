@@ -1,7 +1,5 @@
 package br.seguradora.test;
 
-import java.io.IOException;
-
 public class ExemploTerminal {
 	public static void main (String args[]) {
 		// Imprime "Hello, World!" na saída padrão

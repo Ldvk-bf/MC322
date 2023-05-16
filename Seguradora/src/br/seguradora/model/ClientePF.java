@@ -1,45 +1,31 @@
 package br.seguradora.model;
 
-import java.awt.GridLayout;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.text.MaskFormatter;
-
+import br.seguradora.util.CalcSeguro;
 import br.seguradora.util.Print;
+import br.seguradora.util.Validacao;
 
 public class ClientePF extends Cliente{
 	
-	/* TODO: Class ClientePF 
-	 *  1 - UPDATE METHOD jIOptionalIntutPaneClientePF.
-	 * 
-	 *  2 - UPTADE METHOD: toString()
+	/* TODO Class ClientePF:
+	 * 	lab04
+	 *  	add  calculaScore(): double
 	 * 
 	 * /
-	
-	/*
-	 * Assinatura dos metodos implementados
+
+	/* TODO ANOTAÇÕES:
+	 * 	
+	 * 	Lab03:
+	 * 		Formato adotado para horario: "dd-MM-yyyy"
 	 * 
-	 * public static ClientePF jIOptionalIntutPaneClientePF()
-	 * public boolean validarCPF(String cpf);
-	 * public abstract String toString();
-	 *
-	 *
-	 */
-	
-	
-	/* ANOTAÇÕES:
+	 * 		Verificar esse atributo suspeito no final
 	 * 
-	 * Formato adotado para horario: "dd-MM-yyyy"
-	 * 
-	 * Verificar esse atributo suspeito no final 
+	 * 	Lab04:
 	 * 
 	 */
 	
@@ -49,9 +35,6 @@ public class ClientePF extends Cliente{
 	private String classeEconomica;
 	private LocalDate dataLicenca;
 	private LocalDate dataNascimento;
-	
-	//Atributo suspeito
-	private static ClientePF novoClientePF;
 	
 	public ClientePF(String nomeString, String enderecoString, String generoString,String cpfString,
 			String dataLicencaString, String educacaoString, String dataNascimentoString,String classeEconomicaString){
@@ -69,56 +52,9 @@ public class ClientePF extends Cliente{
 		
 	}
 	
-
-	public static boolean validarCPF(String cpf) {
-	    // Remover caracteres especiais
-	    cpf = cpf.replaceAll("[^0-9]", "");
-
-	    //Verificar se todos os digitos não são iguais
-	    int i = 0;
-	    while(cpf.charAt(i) == cpf.charAt(i+1)) {
-	    	if(i == 9)
-	    		return false;
-	    	i++;
-	    }
-
-	    // Verificar se o cpf tem 11 dígitos
-	    if (cpf.length() != 11) {
-	        return false;
-	    }
-	    
-
-	    // Calcular o primeiro dígito verificador
-	    int somatorio = 0;
-	    for (i = 0; i < 9; i++) {
-	        int numero = cpf.charAt(i) - '0';
-	        somatorio += numero * (10 - i);
-	    }
-	    int digito1 = 11 - (somatorio % 11);
-	    if (digito1 > 9) {
-	        digito1 = 0;
-	    }
-
-	    // Calcular o segundo dígito verificador
-	    somatorio = 0;
-	    for (i = 0; i < 10; i++) {
-	        int numero = cpf.charAt(i) - '0';
-	        somatorio += numero * (11 - i);
-	    }
-	    int digito2 = 11 - (somatorio % 11);
-	    if (digito2 > 9) {
-	        digito2 = 0;
-	    }
-
-	    // Verificar se os dígitos verificadores são válidos
-	    if (digito1 == (cpf.charAt(9) - '0') && digito2 == (cpf.charAt(10) - '0')) {
-	        return true;
-	    } else {
-	        return false;
-	    }
-	}
+	/* metodos de interface */
 	
-	 public static ClientePF inputClientePF(Scanner scanner) {
+	public static ClientePF inputClientePF(Scanner scanner) {
 		 Cliente novoCliente = Cliente.inputCliente(scanner);
 		 
 		 //scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
@@ -135,7 +71,7 @@ public class ClientePF extends Cliente{
 			 Print.tab("CPF da pessoa física:",0);
 			 cpfString = scanner.nextLine();
 			 
-			 if(ClientePF.validarCPF(cpfString)) {
+			 if(Validacao.validarCPF(cpfString)) {
 				 valido = true;
 			 } else {
 				 valido = false;
@@ -147,20 +83,49 @@ public class ClientePF extends Cliente{
 		 Print.tab("Genero da pessoa física:", 0);
 		 String generoString = scanner.nextLine();
 
-		 Print.tab("Data de licenca da pessoa física (EX: 30-01-2000):", 0);
-		 String dataLicencaString = scanner.nextLine();
-
+		 String dataLicencaString;
+		 do {
+			 Print.tab("Data de licenca da pessoa física (EX: 30-01-2005):", 0);
+			 dataLicencaString = scanner.nextLine();
+		 }while(!Pattern.matches("\\d{2}-\\d{2}-\\d{4}", dataLicencaString));
+			 
 		 Print.tab("Educacao da pessoa física:", 0);
 		 String educacaoString = scanner.nextLine();
-
-		 Print.tab("Data de nascimento da pessoa física:", 0);
-		 String dataNascimentoString = scanner.nextLine();
+		 
+		 String dataNascimentoString;
+		 do {
+			 Print.tab("Data de nascimento da pessoa física (EX: 30-01-2005)::", 0);
+			 dataNascimentoString = scanner.nextLine();
+		 }while(!Pattern.matches("\\d{2}-\\d{2}-\\d{4}", dataNascimentoString));
 		 
 		 Print.tab("Classe economica da pessoa física:", 0);
 		 String classeEconomicaString = scanner.nextLine();
 		 
 		 return new ClientePF(novoCliente.getNome(), novoCliente.getEndereco(), generoString, cpfString, dataLicencaString, educacaoString, dataNascimentoString, classeEconomicaString);
 	}
+	
+	
+	
+	
+	/* metodos de dados */
+
+	public double calculaScore() {
+		LocalDate dataAtual = LocalDate.now();
+		int idade = (int) ChronoUnit.YEARS.between(this.dataNascimento, dataAtual);
+		double fator = 0.0;
+		//Print.labelInput(String.valueOf(idade), 7);
+		
+		if(idade <= 30) 
+			fator = CalcSeguro.FATOR_18_30.getValue();
+		else if(30 <= idade && idade < 60)
+			fator = CalcSeguro.FATOR_30_60.getValue();
+		else if(60 <= idade)
+			fator = CalcSeguro.FATOR_60_90.getValue();
+		
+		return CalcSeguro.VALOR_BASE.getValue() * fator * this.getListaVeiculos().size();
+		
+	}
+	
 	
 	//combinar com o metodo do pai
 	public String toString() {
@@ -211,67 +176,6 @@ public class ClientePF extends Cliente{
 
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
-	}
-
-	public static ClientePF jIOptionalIntutPaneClientePF() {
-		//mascara de formatação cpf
-		MaskFormatter mascaraCpf = null;
-		MaskFormatter mascaragenero = null;
-		
-		try {
-			mascaraCpf = new MaskFormatter("###.###.###-##");
-			mascaragenero = new MaskFormatter("##.##.####");
-			mascaraCpf.setPlaceholderCharacter('_');
-			mascaragenero.setPlaceholderCharacter('_');
-		} catch (ParseException excp) {
-			System.err.println("Erro na formatação: " + excp.getMessage());
-            System.exit(-1);
-		}
-		
-		//criação dos objetos da inteface
-		JTextField nome = new JTextField(20);
-		JTextField cpf = new JFormattedTextField(mascaraCpf);
-		JTextField genero = new JFormattedTextField(mascaragenero);
-		JTextField educacao = new JTextField(3);
-		JTextField endereco = new JTextField(50);
-		JPanel myPanel = new JPanel();
-		
-		//Criação do layout
-		GridLayout experimentLayout = new GridLayout(0,1);
-		myPanel.setLayout(experimentLayout);
-		
-		//Junção de todos os objetos
-		myPanel.add(new JLabel("Nome:"));
-		myPanel.add(nome);
-		
-		
-		myPanel.add(new JLabel("Cpf:"));
-		myPanel.add(cpf);
-		
-		myPanel.add(new JLabel("Data de nascimento:"));
-		myPanel.add(genero);
-		
-		myPanel.add(new JLabel("educacao:"));
-		myPanel.add(educacao);
-		
-		myPanel.add(new JLabel("Endereço:"));
-		myPanel.add(endereco);
-		
-			
-		
-		int result = JOptionPane.showConfirmDialog(null, myPanel, 
-		         "Cadastro de cliente", JOptionPane.OK_CANCEL_OPTION);
-		
-		if (result == JOptionPane.OK_OPTION) {
-			novoClientePF = new ClientePF(nome.getText(), endereco.getText(), genero.getText(),
-					cpf.getText(), educacao.getText(), null, null, null);	
-
-			
-			
-		   return novoClientePF;
-		}
-		
-		return null;
 	}
 
 }
