@@ -96,6 +96,6 @@ public class Validacao {
 	}
 	
 	public static boolean validarNome(String nome) {
-		return Pattern.matches("[a-zA-Z]+", nome);
+		return Pattern.matches("^[a-zA-Z\\s]+$", nome);
 	}
 }

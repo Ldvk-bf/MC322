@@ -86,7 +86,7 @@ public class ViewPrincipal extends ViewMenu{
 		
 		for (Veiculo chave : clienteEmissor.getListaVeiculos()) {
 	        if (chave.getPlaca().equals(veiculoString)) {
-	        	clienteReceptor.getListaVeiculos().add(novoVeiculo);
+	        	clienteReceptor.getListaVeiculos().add(chave);
 	        	clienteEmissor.getListaVeiculos().remove(chave);
 	        	return true;
 	        }

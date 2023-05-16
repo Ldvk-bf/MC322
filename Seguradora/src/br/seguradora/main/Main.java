@@ -42,6 +42,53 @@ public class Main {
 
 	public static void main(String[] args) {
 		
+		Seguradora seg = new Seguradora("Cesar motors", "92 9 96140802", "Ludivik@gmail.com", "Rua angelo vicentim");
+		Veiculo vei = new Veiculo("abc1d23", "Chevrolet", "onix", 2023);
+		Veiculo vei2 = new Veiculo("abc2s32", "Chevrolet", "Toro", 2023);
+		ClientePF novoCliente = new ClientePF("Ludivik", "Rua felix", "Masculino", "07150760279", "30-01-2022", "Superior incompleto", "30-01-2005", "D");
+		ClientePJ novoClientePJ = new ClientePJ("Corretora 32", "Rua faz tudo", "44.490.922/0001-08", "30-01-2005", 100);
+		
+		novoCliente.getListaVeiculos().add(vei);
+		novoClientePJ.getListaVeiculos().add(vei2);
+		
+		seg.cadastrarCliente(novoCliente, Cliente.TipoDocumento.CPF);
+		seg.cadastrarCliente(novoClientePJ, Cliente.TipoDocumento.CNPJ);
+		
+		Sinistro sinistro = new Sinistro("30-01-2023","Rua felice vazola", vei, novoCliente, seg);
+		Sinistro sinistro2 = new Sinistro("30-01-2023","Rua felice vazola", vei2, novoClientePJ, seg);
+		
+		seg.getListaSinistro().add(sinistro2);
+		seg.getListaSinistro().add(sinistro);
+		
+		System.out.println("Listas de clientes cpf e cnpj");
+		System.out.println(seg.listarClientesLog("cpf"));
+		System.out.println(seg.listarClientesLog("cnpj"));
+		
+		System.out.println("");
+		System.out.println("Vizualização dos sinistrso por cliente");
+		System.out.println(seg.vizualizarSinistro(novoCliente.getNome()));
+		System.out.println(seg.vizualizarSinistro(novoClientePJ.getNome()));
+
+
+		System.out.println("");
+		System.out.println("Lista de sinistros de seguradora");
+		System.out.println(seg.listarSinistrosLog());
+		System.out.println("Calcular receita: "+seg.calclarReceita());
+		
+		System.out.println("");
+		System.out.println("Atualização do score papos o calculo de receita");
+		System.out.println(seg.listarClientesLog("cpf"));
+		System.out.println(seg.listarClientesLog("cnpj"));
+		
+		//Listar clientes
+		// VizualizarSinistro
+		// Listar sinistro
+		//Calcular precoSeguro CLiente
+		//Calcular receita seguradora
+		
+		
+		
+		
 		listaSeguradoras = new LinkedList<Seguradora>();
 		String op;
 		

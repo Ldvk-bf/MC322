@@ -95,8 +95,7 @@ public class ViewExcluir extends ViewMenu{
 		
 		for (Sinistro chave : getAtualSeguradora().getListaSinistro()) {
 	        if (chave.getId().equals(idSinistroString)) {
-	        	scan.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
-	        	getAtualSeguradora().getListaSinistro().remove(getAtualSeguradora().getListaSinistro().indexOf(chave));
+	        	getAtualSeguradora().getListaSinistro().remove(chave);
 	            feito = true;
 	        }
 	    }

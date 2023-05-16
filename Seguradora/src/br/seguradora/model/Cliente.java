@@ -59,7 +59,7 @@ public class Cliente {
 	}
 
 	public String toString() {
-		return "[class: Cliente, nome: "+this.getNome()+", endereco: "+this.getEndereco()+", veículos: "+this.listarVeiculos()+"]";
+		return "[class: Cliente, nome: "+this.getNome()+", endereco: "+this.getEndereco()+", veículos: "+this.listarVeiculos()+", valor do seguro: "+this.getValorSeguros()+"]";
 	}
 	
 	public String listarVeiculos() {

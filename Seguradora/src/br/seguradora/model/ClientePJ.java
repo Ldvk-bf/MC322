@@ -82,11 +82,11 @@ public class ClientePJ extends Cliente {
 	}
 	 
 	 public double calculaScore() {
-		 return CalcSeguro.VALOR_BASE.getValue() * (1 + ( qtdeFuncionarios ) /100) * getListaVeiculos().size();
+		 return CalcSeguro.VALOR_BASE.getValue() * (1 + ( qtdeFuncionarios /100)) * getListaVeiculos().size();
 	 }
 	
 	public String toString() {
-		return super.toString().substring(0, super.toString().length() - 1)+", cnpj: "+this.cnpj+", data de fundação: "+this.getDataFundacao()+"]";
+		return super.toString().substring(0, super.toString().length() - 1)+", cnpj: "+this.cnpj+", data de fundação: "+this.getDataFundacao()+", quantidade de funcionarios: "+this.getQtdeFuncionarios()+"]";
 	}
 	
 	public String getCnpj() {
@@ -99,5 +99,15 @@ public class ClientePJ extends Cliente {
 
 	public void setDataFundacao(LocalDate dataFundacao) {
 		this.dataFundacao = dataFundacao;
+	}
+
+
+	public int getQtdeFuncionarios() {
+		return qtdeFuncionarios;
+	}
+
+
+	public void setQtdeFuncionarios(int qtdeFuncionarios) {
+		this.qtdeFuncionarios = qtdeFuncionarios;
 	}
 }
