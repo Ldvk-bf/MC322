@@ -6,11 +6,19 @@ import br.seguradora.util.Print;
 import br.seguradora.util.Util;
 
 public enum Listar {
-	LISTAR_CLIENTE(1, "Listar cliente por seguradora"),
-	LISTAR_SINISTRO(2, "Listar sinistro por seguradora"),
-	LISTAR_SINISTRO_P_CLIENTE(3, "Listar sinistro por cliente"),
-	LISTAR_VEICULO_P_CLIENTE(4, "Listar veiculo por cliente"),
-	LISTAR_VEICULO(5, "Listar veiculo por seguradora");
+	LISTAR_CLIENTES(1, "Listar CLIENTES por SEGURADORA"),
+	LISTAR_VEICULOS(2, "Listar VEICULOS por SEGURADORA"),
+	LISTAR_SEGUROS(3, "Listar SEGUROS por SEGURADORA"),
+	LISTAR_CONDUTORES(4, "Listar CONDUTORES por SEGURADORA"),
+	LISTAR_SINISTROS(5, "Listar SINISTROS por SEGURADORA"),
+	LISTAR_FROTA_P_CLIENTE(6, "Listar FROTAS por CLIENTE"),
+	LISTAR_VEICULOS_P_CLIENTE(7, "Listar VEICULOS por CLIENTE"),
+	LISTAR_SEGUROS_P_CLIENTE(8, "Listar SEGUROS por CLIENTE"),
+	LISTAR_CONDURES_P_CLIENTE(9, "Listar CONDUTORES por CLIENTE"),
+	LISTAR_SINISTROS_P_CLIENTE(10, "Listar SINISTROS por CLIENTE"),
+	LISTAR_CONDUTORES_P_SEGURO(11, "Listar CONDUTORES por SEGURO"),
+	LISTAR_SINISTROS_P_SEGURO(12, "Listar SINISTROS por SEGURO"),
+	LISTAR_VEICULOS_P_FROTA(13, "Listar VEÍCULO por FROTA");
 	
 	private final int code;
 	private final String nome;

@@ -1,23 +1,11 @@
 package br.seguradora.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
 
 import br.seguradora.util.Print;
+import br.seguradora.util.Validar;
 
 public class Seguradora {
-	
-	/* TODO: Class Seguradora
-	 * 	
-	 * 	lab04
-	 * 		calcularPrecoSeguroCliente()
-	 * 		calcularReceita() (Interar pelos clientes)
-	 * 
-	 * 
-	 * /
 	
 	/* ANOTAÇÕES:
 	 * 
@@ -50,8 +38,8 @@ public class Seguradora {
 	private String telefone ;
 	private String email ;
 	private String endereco ;
-	private List<Sinistro> listaSinistro = new ArrayList<Sinistro>();
-	private Map<Cliente, Cliente.TipoDocumento> mapCliente = new HashMap<Cliente, Cliente.TipoDocumento>();
+	private ArrayList<Seguro> listaSeguros = new ArrayList<Seguro>();
+	private ArrayList<Cliente> listaCliente = new ArrayList<Cliente>();
 	
 	
 	// Construtor
@@ -62,291 +50,226 @@ public class Seguradora {
 		this.endereco = endereco ;
 	}
 	
-	public boolean cadastrarCliente(Cliente clienteNovo, Cliente.TipoDocumento tipo) {
-		try {
-			this.mapCliente.put(clienteNovo, tipo);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
+	public boolean cadastrarCliente(Cliente clienteNovo) {
+		if(clienteNovo != null)
+			return this.listaCliente.add(clienteNovo);
 		return true;
 	}
 	
-	// Como o tipo de parametro mostrado na descrição do lab, tive que fazer alguns ajustes para buscar.
-	public boolean removerCliente(String clienteSelecionado) {
+	public ArrayList<Cliente> listarClientes(Validar.FuncaoValidador condicao) {
+		ArrayList<Cliente> lista = new ArrayList<>();
+		for(Cliente c : listaCliente) {
+			if(condicao.executar(c.getCodigoPessoa()))
+				lista.add(c);
+		}
+		return lista;
+	}
+	
+	public Cliente selecionarCliente(String codigoPessoa) {
+		for(Cliente c : listaCliente) {
+			if(c.getCodigoPessoa().equals(codigoPessoa))
+				return c;
+		}
+		return null;
+	}
+	
+	public boolean removerCliente(String codigoClienteString) {
 		boolean valido = false;
-		try {
-			for (Cliente chave : this.mapCliente.keySet()) {
-		        if (chave.getNome().equals(clienteSelecionado)) {
-		        	this.mapCliente.remove(chave);
-		            valido = true;
-		        }
-		    }
-			return valido;
-		} catch (Exception e) {
-			Print.tab("Não houve exclusão", 0);
-			return false;
-		}
-	}
-	
-	public String listarClientesLog(String tipoCliente) {
-		try {
-			Cliente.TipoDocumento tipo;
-			tipo = tipoCliente.equals("cpf") ? Cliente.TipoDocumento.CPF : Cliente.TipoDocumento.CNPJ ;
-			
-			// Pela fé oq eu sofri pra descobrir isso eh brincadeira
-			final StringBuilder listaClienteStringBuilder = new StringBuilder();
-			mapCliente.forEach((chave, valor) -> {
-				if(tipo == valor) {
-					listaClienteStringBuilder.append(chave.toString()).append(", ");
-				}
-			});
-				
-			String listaClienteString = listaClienteStringBuilder.toString().substring(0, listaClienteStringBuilder.length() - 2);
-			return "[ "+listaClienteString+" ]";
-		} catch (Exception e) {
-
-			return "[ ]";
-		}
-	}
-	
-
-	public boolean gerarSinistro(Scanner scanner) {
-		// série de inputs;
-		Print.tab("========================================================================================================================================================================================================================", 0);
-		Print.tab("Gerando sinistro", 1);
-		
-		Print.tab("Data da sinistro (Ex. 30-01-2005):", 0);
-		String dataString = scanner.nextLine();
-	
-		Print.tab("Endereco do sinistro:", 0);
-		String enderecoString = scanner.nextLine();
-
-		Seguradora seguradora = this;
-
-		Print.tab("========================================================================================================================================================================================================================", 0);
-		Print.tab("Escolha um cliente, e digite o seu nome", 1);
-		Print.tab("", 0);
-		Print.tab(this.listarClientesLog("cpf"), 0);
-		Print.tab("", 0);
-		Print.tab(this.listarClientesLog("cnpj"), 0);
-		Print.tab("", 0);
-		Print.tab("", 0);
-		
-		String nomeClienteString = scanner.nextLine();
-		Cliente novoCliente = new Cliente("", "");
-		boolean valido = false;
-		
-		for (Cliente chave : this.mapCliente.keySet()) {
-	        if (chave.getNome().equals(nomeClienteString)) {
-	        	novoCliente = chave;
-	        	valido = true;
-	        }
-	    }
-		
-		if(!valido)
-			return false;
-			
-		Print.tab("========================================================================================================================================================================================================================", 0);
-		Print.tab("Escolha um veiculo do cliente, e digite a sua placa", 1);
-		Print.tab("", 0);
-		Print.tab(novoCliente.listarVeiculos(), 0);
-		Print.tab("", 0);
-		Print.tab("", 0);
-		
-		String veiculoString = scanner.nextLine();
-		Veiculo novoVeiculo = new Veiculo("","","",0);
-		valido = false;
-		
-		for (Veiculo chave : novoCliente.getListaVeiculos()) {
-	        if (chave.getPlaca().equals(veiculoString)) {
-	        	novoVeiculo = chave;
-	        	valido = true;
-	        }
-	    }
-		
-		if(!valido)
-			return false;
-			
-		try {
-			Sinistro novoSinistro = new Sinistro(dataString, enderecoString, novoVeiculo, novoCliente, seguradora);
-			listaSinistro.add(novoSinistro);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		
-		return true;
-		
-	}
-	
-	public boolean vizualizarSinistro(String clienteSelecionado) {
-		try {
-			final StringBuilder listaSinistroStringBuilder = new StringBuilder();
-			listaSinistro.forEach((valor) -> {
-				if(valor.getCliente().getNome().equals(clienteSelecionado)) {
-					listaSinistroStringBuilder .append(valor.toString()).append(", ");
-				}
-			});
-				
-			String listaSinistroString = listaSinistroStringBuilder .toString().substring(0, listaSinistroStringBuilder .length() - 2);
-			listaSinistroString = "[ "+listaSinistroString +" ]";
-			System.out.println(listaSinistroString);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			System.out.println("Não há registros de sinistros associados a esse cliente, ou aconteceu um erro!");
-			return false;
-		}
-		return true;
-	}
-	
-	public String listarSinistrosLog() {
-		try {
-			final StringBuilder listaSinistroStringBuilder = new StringBuilder();
-			listaSinistro.forEach((valor) -> {
-					listaSinistroStringBuilder .append(valor.toString()).append(", ");
-			});
-				
-			String listaSinistroString = listaSinistroStringBuilder .toString().substring(0, listaSinistroStringBuilder .length() - 2);
-			listaSinistroString = "[ "+listaSinistroString +" ]";
-			return listaSinistroString;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			//System.out.println("Não há registros de sinistros associados a essa Seguradora, ou aconteceu um erro!");
-			return "[ ]";
-		}
-
-	}
-	
-	public boolean removerSinistro(String sinistroSelecionado) {
-		boolean valido = false;
-		
-		for (Sinistro chave : this.listaSinistro) {
-	        if (chave.getId().equals(sinistroSelecionado)) {
-	        	this.listaSinistro.remove(chave);
+		for (Cliente chave : this.listaCliente) {
+	        if (chave.getCodigoPessoa().equals(codigoClienteString)) {
+	        	this.listaCliente.remove(chave);
 	            valido = true;
 	        }
 	    }
 		return valido;
 	}
 	
-	public int qtdeSinistroCliente(String clienteSelecionado) {
-		int count = 0;
-		for(Sinistro i : listaSinistro ) {
-			if(i.getCliente().getNome().equals(clienteSelecionado)) {
-				count++;
-			}
+	public boolean gerarSeguro(Seguro novoSeguro) {
+		if(novoSeguro != null)
+			return listaSeguros.add(novoSeguro);
+		return false;
+	}
+	
+	public Seguro selecionarSeguro(String idPessoa) {
+		for(Seguro c : listaSeguros) {
+			if(c.getId().equals(idPessoa))
+				return c;
 		}
-		return count;
+		return null;
+	}
+	
+	public ArrayList<Seguro> listarSeguros() {
+		return this.listaSeguros;
+	}
+	
+	public ArrayList<Seguro> listarSegurosPorCliente(String codigoClienteString) {
+		ArrayList<Seguro> listaSeguro = new ArrayList<Seguro>();
+		codigoClienteString = codigoClienteString.replaceAll("[^0-9]+", "");
+
+		for(Seguro seguroObj : listaSeguros) {
+			if(seguroObj.getCliente().getCodigoPessoa().equals(codigoClienteString)) 
+				listaSeguro.add(seguroObj);
+		}
+		return listaSeguro;				
 	}
 
-	public double calcularPrecoSeguroCliente(String clienteSelecionado) {
-		double score = 0;
-		for(Cliente i : mapCliente.keySet()) {
-			if(i.getNome().equals(clienteSelecionado)) {
-				
-				if(i instanceof ClientePF) score = ((ClientePF) i).calculaScore();
-				else if(i instanceof ClientePJ) score = ((ClientePJ) i).calculaScore();
-					
-				i.setValorSeguros(score * (1 + qtdeSinistroCliente(i.getNome())));
-				return i.getValorSeguros();
+	public boolean cancelarSeguro(String idString) {
+		for(Seguro seguroObj : listaSeguros) 
+			if(seguroObj.getId().equals(idString))
+				return listaSeguros.remove(seguroObj);
+		return false;
+	}
+	
+	public ArrayList<Condutor> listarCondutor() {
+		ArrayList<Condutor> lista = new ArrayList<>();
+		for (Seguro seguro : listaSeguros) {
+			lista.addAll(seguro.getListaCondutores());	
+		}
+		return lista;
+	}
+	
+	public Condutor selecionarCondutor(String cpf) {
+		for(Condutor c : listarCondutor()) {
+			if(c.getCpf().equals(cpf))
+				return c;
+		}
+		return null;
+	}
+	
+	public ArrayList<Condutor> listarCondutoresPorCliente(String codigoClienteString) {
+		ArrayList<Condutor> lista = new ArrayList<Condutor>();
+		codigoClienteString = codigoClienteString.replaceAll("[^0-9]+", "");
+
+		for(Seguro seguroObj : listaSeguros) {
+			if(seguroObj.getCliente().getCodigoPessoa().equals(codigoClienteString)) 
+				lista.addAll(seguroObj.getListaCondutores());
+		}
+		return lista;				
+	}
+	
+	public ArrayList<Condutor> listarCondutoresPorSeguro(String idString) {
+		for(Seguro seguroObj : listaSeguros) {
+			if(seguroObj.getId().equals(idString)) 
+				return seguroObj.getListaCondutores();
+		}
+		return null;				
+	}
+
+	
+	//TODO CAST CLIENTE
+	public ArrayList<Veiculo> listarVeiculos() {
+		ArrayList<Veiculo> lista = new ArrayList<>();
+		
+		ArrayList<Cliente> listaClientes = listarClientes((data) -> Validar.validarCnpj(data));
+		for (Cliente cliente : listaClientes) {
+			for (Frota frota : ((ClientePJ)cliente).getListaFrotas()) {
+				lista.addAll(frota.getListaVeiculos());
 			}
 		}
-		return 0.0;
+		
+		listaClientes = listarClientes((data) -> Validar.validarCPF(data));
+		for (Cliente cliente : listaClientes) {
+			lista.addAll(((ClientePF)cliente).getFrotaVeiculos().getListaVeiculos());
+		}
+		return lista;
+	}
+	
+	//TODO CAST CLIENTE
+	public Veiculo selecionarVeiculo(String placaString) {
+		Veiculo objVeiculo = null;
+		for(Cliente c : listaCliente) {
+				objVeiculo = c.selecionarVeiculo(placaString);
+		}
+		return objVeiculo;
+	}
+	
+	public ArrayList<Sinistro> listarSinistros() {
+		ArrayList<Sinistro> listaSinistros = new ArrayList<Sinistro>();
+		for(Seguro seguroObj : listaSeguros) {
+			listaSinistros.addAll(seguroObj.getListaSinistros());
+		}
+		return listaSinistros;
+	}
+	
+	//TODO CAST CLIENTE
+	public ArrayList<Sinistro> listarSinistrosPorCliente(String codigoClienteString) {
+		codigoClienteString = codigoClienteString.replaceAll("[^0-9]+", "");
+		for(Cliente clienteObj : listaCliente) {
+			if(clienteObj.getCodigoPessoa().equals(codigoClienteString))
+				return clienteObj.listarSinistros(this);				
+		}
+		return null;				
+	}
+	
+	public ArrayList<Sinistro> listarSinistrosPorSeguro(String idString) {
+		for(Seguro objSeguro : listaSeguros) {
+			if(objSeguro.getId().equals(idString))
+				return objSeguro.getListaSinistros();				
+		}
+		return null;				
+	}
+	
+	public Sinistro selecionarSinistro(String idString) {
+		Sinistro objSinistro = null;
+		for(Sinistro s : listarSinistros()) {
+			if(s.getId().equals(idString))
+				return objSinistro;
+		}
+		return null;
 	}
 	
 	public double calclarReceita() {
 		double receita = 0.0;
-		for(Cliente i : this.getMapCliente().keySet()) {
-			receita += this.calcularPrecoSeguroCliente(i.getNome());
+		for(Seguro i : listaSeguros) {
+			receita += i.getValorMensal();
 		}
 		return receita;
 	}
-
 	
-	public static Seguradora inputSeguradora(Scanner scanner) {
-		 Print.tab("========================================================================================================================================================================================================================", 0);
-		 Print.tab("Cadastro de seguradora, por favor informe: ", 1);
-		 
-		 Print.labelInput("Nome da seguradora: ", 0);
-		 String nomeString = scanner.nextLine();
-		 
-		 Print.labelInput("Telefone da seguradora: ", 0);
-		 String telefoneString = scanner.nextLine();
-		 
-		 Print.labelInput("Email da seguradora: ", 0);
-		 String emailString = scanner.nextLine();
-
-		 Print.labelInput("Endereco da seguradora: ", 0);
-		 String enderecoString = scanner.nextLine();
-		 
-		 return new Seguradora(nomeString, telefoneString, emailString, enderecoString);
-	}
-	
-	
+	@Override
 	public String toString() {
-		return "[class: Seguradora, nome: "+this.nome+", telefone: "+this.telefone+", email: "+this.email+", endereco: "+this.endereco+", lista de clientes - cpf:"+listarClientesLog("cpf")+", lista de clientes - cnpj:"+listarClientesLog("cnpj")+", lista de sinistros:"+listarSinistrosLog()+" ]";
+		return "[class: Seguradora, nome: "+this.nome+", telefone: "+this.telefone+", email: "+this.email+", endereco: "+this.endereco+
+				", lista de clientes - cpf:"+this.listarClientes((data) -> true)+
+				", lista de sinistros:"+listarSinistros()+" ]";
 	}
 	
 	public String getNome() {
 		return nome;
 	}
 
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
 
 	public String getTelefone() {
 		return telefone;
 	}
 
-
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-
 
 	public String getEmail() {
 		return email;
 	}
 
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 
 	public String getEndereco() {
 		return endereco;
 	}
 
-
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
 
-
-	public List<Sinistro> getListaSinistro() {
-		return listaSinistro;
+	public ArrayList<Seguro> getListaSeguros() {
+		return listaSeguros;
 	}
 
-
-	public void setListaSinistro(List<Sinistro> listaSinistro) {
-		this.listaSinistro = listaSinistro;
-	}
-
-
-	public Map<Cliente, Cliente.TipoDocumento> getMapCliente() {
-		return mapCliente;
-	}
-
-
-	public void setListaCliente(Map<Cliente, Cliente.TipoDocumento> mapCliente) {
-		this.mapCliente = mapCliente;
+	public void setListaSeguros(ArrayList<Seguro> listaSeguros) {
+		this.listaSeguros = listaSeguros;
 	}
 }

@@ -6,8 +6,12 @@ import br.seguradora.util.Print;
 import br.seguradora.util.Util;
 
 public enum Cadastrar {
-	CADASTRAR_CLIENTE(1,"Cadastrar cliente PF/PJ"),
-	CADASTRAR_VEICULO(2, "Cadastrar veiculo");
+	CADASTRAR_CLIENTE(1,"Cadastrar CLIENTE"),
+	CADASTRAR_FROTA(2,"Adicionar FROTA"),
+	CADASTRAR_VEICULO(3, "Adicionar VEICULO"),
+	CADASTRAR_SEGURO(4, "Gerar SEGURO"),
+	CADASTRAR_SINISTRO(5,"Gerar SINISTRO"),
+	CADASTRAR_CONDUTOR(6, "Autorizar CONDUTOR");
 	
 	private final int code;
 	private final String nome;
@@ -35,6 +39,7 @@ public enum Cadastrar {
 			}
 			Print.listItem(" 0. Sair", 3);
 			
+			scan.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");		
 			code = scan.nextLine();
 			
 			for(Cadastrar v : Cadastrar.values()) {

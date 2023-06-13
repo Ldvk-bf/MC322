@@ -2,16 +2,16 @@ package br.seguradora.model.menu;
 
 import java.util.Scanner;
 
+import br.seguradora.model.Seguradora;
 import br.seguradora.util.Print;
 import br.seguradora.util.Util;
 
 public enum Principal{
-	CADASTROS(1,"Cadastros"),
-	LISTAR(2, "Listas"),
-	EXCLUIR(3, "Excluir"),
-	GERAR_SINISTRO(4, "Gerar sinistro"),
-	TRANSFERIR_SEGURO(5, "Transferir Seguro"),
-	CALCULAR_RECEITA_SEGURADORA(6, "Calcular receuta seguradora");
+	CADASTROS(1,"Menu cadastros"),
+	LISTAR(2, "Menu listas"),
+	EXCLUIR(3, "Menu Exclusões"),
+	TRANSFERIR_SEGURO(4, "Transferir Seguro"),
+	CALCULAR_RECEITA_SEGURADORA(5, "Calcular receita desta seguradora");
 	
 	private final int code;
 	private final String nome;
@@ -25,11 +25,11 @@ public enum Principal{
 		return this.code;
 	}
 
-	public static void init(Scanner scan, Util.Funcao... metodos) {
+	public static void init(Scanner scan, Seguradora seg, Util.Funcao... metodos) {
 		String code;
 		do {
 			Print.tab("========================================================================================================================================================================================================================", 0);
-			Print.tab("Menu principal", 2);
+			Print.tab("Menu principal - Seguradora: "+seg.getNome(), 2);
 			Print.tab("Abaixo estão suas opções: ", 2);
 			Print.tab("", 0);
 			Print.tab("", 0);

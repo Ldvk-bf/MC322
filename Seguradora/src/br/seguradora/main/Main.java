@@ -2,28 +2,18 @@ package br.seguradora.main;
 
 import java.util.LinkedList;
 import java.util.Scanner;
-import br.seguradora.model.*;
+
+import br.seguradora.model.Seguradora;
 import br.seguradora.model.menu.Cadastrar;
 import br.seguradora.model.menu.Excluir;
 import br.seguradora.model.menu.Listar;
 import br.seguradora.model.menu.Principal;
+import br.seguradora.util.Input;
 import br.seguradora.util.Print;
-import br.seguradora.view.ViewCadastrar;
-import br.seguradora.view.ViewExcluir;
-import br.seguradora.view.ViewListar;
-import br.seguradora.view.ViewMenu;
-import br.seguradora.view.ViewPrincipal;
+import br.seguradora.util.Util;
+import br.seguradora.util.Validar;
 
 public class Main {
-	
-	/* TODO: Class Main
-	 * 
-	 *  lab04
-	 *  	viewTransferirSeguro
-	 * 		viewCadastrarVeiculo
-	 * 		removerVeiculo
-	 * 
-	 * /
 	
 	/* ANOTAÇÕES:
 	 * 
@@ -41,116 +31,95 @@ public class Main {
 
 
 	public static void main(String[] args) {
-		
-		Seguradora seg = new Seguradora("Cesar motors", "92 9 96140802", "Ludivik@gmail.com", "Rua angelo vicentim");
-		Veiculo vei = new Veiculo("abc1d23", "Chevrolet", "onix", 2023);
-		Veiculo vei2 = new Veiculo("abc2s32", "Chevrolet", "Toro", 2023);
-		ClientePF novoCliente = new ClientePF("Ludivik", "Rua felix", "Masculino", "07150760279", "30-01-2022", "Superior incompleto", "30-01-2005", "D");
-		ClientePJ novoClientePJ = new ClientePJ("Corretora 32", "Rua faz tudo", "44.490.922/0001-08", "30-01-2005", 100);
-		
-		novoCliente.getListaVeiculos().add(vei);
-		novoClientePJ.getListaVeiculos().add(vei2);
-		
-		seg.cadastrarCliente(novoCliente, Cliente.TipoDocumento.CPF);
-		seg.cadastrarCliente(novoClientePJ, Cliente.TipoDocumento.CNPJ);
-		
-		Sinistro sinistro = new Sinistro("30-01-2023","Rua felice vazola", vei, novoCliente, seg);
-		Sinistro sinistro2 = new Sinistro("30-01-2023","Rua felice vazola", vei2, novoClientePJ, seg);
-		
-		seg.getListaSinistro().add(sinistro2);
-		seg.getListaSinistro().add(sinistro);
-		
-		System.out.println("Listas de clientes cpf e cnpj");
-		System.out.println(seg.listarClientesLog("cpf"));
-		System.out.println(seg.listarClientesLog("cnpj"));
-		
-		System.out.println("");
-		System.out.println("Vizualização dos sinistrso por cliente");
-		System.out.println(seg.vizualizarSinistro(novoCliente.getNome()));
-		System.out.println(seg.vizualizarSinistro(novoClientePJ.getNome()));
 
-
-		System.out.println("");
-		System.out.println("Lista de sinistros de seguradora");
-		System.out.println(seg.listarSinistrosLog());
-		System.out.println("Calcular receita: "+seg.calclarReceita());
-		
-		System.out.println("");
-		System.out.println("Atualização do score papos o calculo de receita");
-		System.out.println(seg.listarClientesLog("cpf"));
-		System.out.println(seg.listarClientesLog("cnpj"));
-		
-		//Listar clientes
-		// VizualizarSinistro
-		// Listar sinistro
-		//Calcular precoSeguro CLiente
-		//Calcular receita seguradora
-		
-		
-		
+		Util.basicStruture();
 		
 		listaSeguradoras = new LinkedList<Seguradora>();
 		String op;
 		
+		Print.tab("========================================================================================================================================================================================================================", 0);
+		Print.tab("", 0);
+		Print.tab("", 0);
+		Print.tab("SE ALGO DER ERRADO CONTINUE APERTANDO O ENTRR", 1);
+		Print.tab("", 0);
+		Print.tab("", 0);
+		Print.tab("Peço perdão por esse codigo, nada ficou intuitivo", 1);
+		Print.tab("No readme do github tem um Flow chart explicando mais ou menos o fluxo do codigo", 1);
+		Print.tab("Confesso que na minha consepção parece logico.", 1);
+		Print.tab("Se mesmo assim não não fizer sentido teria como dar alguma dica?", 1);
+		Print.tab("", 0);
+		Print.tab("", 0);
+		
 		do{
 			Print.tab("========================================================================================================================================================================================================================", 0);
-			Print.tab("Peço perdão por esse codigo, nada ficou intuitivo", 1);
 			Print.tab("Seja bem-vindo, aqui está a lista de seguradoras, escolha uma:", 1);
+			Print.tab("", 0);
+			if(listaSeguradoras.isEmpty())
+				Print.tab("NÃO HÁ NENHUMA SEGURADORA CADASTRADA, PORTANTO CADASTRE UMA", 1);
 			Print.tab("", 0);
 			
 			int cont = 0;
-			if (listaSeguradoras.size() != 0) {
+			if (listaSeguradoras.size() != 0) 
 			    for (Object valor : listaSeguradoras) {
 			        cont++;
 			        Print.listItem(" "+cont+". "+valor.toString(), 2);
 			    }
-	
-			}
+
 			Print.tab("", 0);
-			Print.tab("Informe o número da seguradora que deseja acessar", 1);
+			Print.tab("Para realizar as operações deve-se selecionar uma operadora.", 1);
+			Print.tab("Ao lado da seguradora há um número indicando a ordem de seguradoras", 1);
+			Print.tab("Informe o número da seguradora que deseja estar acessando.", 1);
+			Print.tab("", 0);
 			Print.tab("Para cadastrar uma nova seguradora digite: c", 1);
-			Print.tab("Para sair digite: 0", 1);
 			Print.tab("", 0);
+			Print.tab("Para sair digite: 0", 1);
 			Print.tab("", 0);
 			
 			Scanner scan = new Scanner(System.in);
 			op = scan.nextLine();
 			
-			
 			if(op.equals("c")) {
-				listaSeguradoras.add(Seguradora.inputSeguradora(scan));
-			} else {
+				listaSeguradoras.add(Input.seguradora.cadastro(scan));
+			} else if (Validar.validarNumero(op)){
+				Seguradora seg = listaSeguradoras.get(Integer.parseInt(op)-1);
 				try {
 					if(1 <= Integer.parseInt(op) && Integer.parseInt(op) <= cont){
-						ViewMenu.setAtualSeguradora(listaSeguradoras.get(Integer.parseInt(op)-1));
-						
-						Principal.init(scan,
-								() -> Cadastrar.init(scan, 
-										() -> ViewCadastrar.viewCadastrarCliente(scan),
-										() -> ViewCadastrar.viewCadastrarVeiculo(scan)),
-								() -> Listar.init(scan, 
-										() -> ViewListar.viewListaClientes(scan),
-										() -> ViewListar.viewListaSinistros(scan),
-										() -> ViewListar.viewListaSinistroCliente(scan),
-										() -> ViewListar.viewListaVeiculoCliente(scan),
-										() -> ViewListar.viewListaVeiculo(scan)),
+						Principal.init(scan, seg,
+								() -> Cadastrar.init(scan,
+									() -> Input.cliente.addCliente(scan, seg),
+									() -> Input.frota.addFrota(scan, seg, null),
+									() -> Input.veiculo.addVeiculo(scan, seg, null),
+									() -> Input.seguro.gerarSeguro(scan, seg, null),
+									() -> Input.sinistro.gerarSinistro(scan, seg, null, null),
+									() -> Input.condutor.autorizarCondutor(scan, seg, null)),
+								() -> Listar.init(scan,
+									() -> Input.cliente.selecaoCliente(scan, seg, false, (data) -> true),
+									() -> Input.veiculo.selecaoVeiculo(scan, seg, false),
+									() -> Input.seguro.selecaoSeguro(scan, seg, false),
+									() -> Input.condutor.selecaoCondutor(scan, seg, false),
+									() -> Input.sinistro.selecaoSinistro(scan, seg, false),
+									() -> Input.frota.selecaoFrotaPorCliente(scan, seg, false, null),
+									() -> Input.veiculo.selecaoVeiculoPorCliente(scan, seg, false, null),
+									() -> Input.seguro.selecaoSeguroPorCliente(scan, seg, false, null),
+									() -> Input.condutor.selecaoCondutorPorCliente(scan, seg, false, null),
+									() -> Input.sinistro.selecaoSinistroPorCliente(scan, seg, false, null),
+									() -> Input.condutor.selecaoCondutorPorSeguro(scan, seg, false, null),
+									() -> Input.sinistro.selecaoSinistroPorSeguro(scan, seg, false, null),
+									() -> Input.veiculo.selecaoVeiculoPorFrota(scan, seg, false, null, null)),
 								() -> Excluir.init(scan,
-										() -> ViewExcluir.viewExcluirCliente(scan),
-										() -> ViewExcluir.viewExcluirVeiculo(scan),
-										() -> ViewExcluir.viewExcluirSinistro(scan)),
-								() -> ViewPrincipal.viewGerarSinistro(scan),
-								() -> ViewPrincipal.viewTransferirSeguro(scan),
-								() -> ViewPrincipal.viewCalcularReceita(scan));
-						
+									() -> Input.cliente.removerCliente(scan, seg),
+									() -> Input.frota.removerFrota(scan, seg, null),
+									() -> Input.veiculo.removerVeiculo(scan, seg, null, null),
+									() -> Input.seguro.removerSeguro(scan, seg),
+									() -> Input.condutor.desautorizarCondutor(scan, seg)),
+								() -> Input.transferirSeguro(scan, seg),
+								() -> Input.calcularReceita(scan, seg));
 					}					
 				} catch (Exception e) {
-					// TODO: handle exception
+
 				}
 			}
 		}while(!op.equals("0"));
-		
-		Print.borderTab("Acabou!", 0);
-		
 	}
 
 }

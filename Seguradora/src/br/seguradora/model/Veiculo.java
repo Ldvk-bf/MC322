@@ -1,34 +1,12 @@
 package br.seguradora.model;
 
-import java.util.Scanner;
-
-import br.seguradora.util.Print;
-
 public class Veiculo {
-	
-	/* TODO: Class Seguradora
-	 *  
-	 *  1 - add new attributes (feito) -> (funcional
-	 * 	
-	 *  2 - UPDATE METHOD: jOptionalInputPaneSinistro()
-	 *  
-	 *  3 - UPDATE METHOD: toString() (feito) -> (Funcional)
-	 * 
-	 * /
-	
-	/* Assinatura dos metodos implementados
-	 * 
-	 * 
-	 * public static Veiculo jOptionalInputPaneVeiculo();
-	 * private void criarId()
-	 * public String toString();
-	 * 
-	 */
-	
 	
 	/* ANOTAÇÕES:
 	 * 
 	 * Rever o estado dessa variavel suspeita
+	 * 
+	 * 	lab05
 	 * 
 	 */
 	
@@ -43,27 +21,8 @@ public class Veiculo {
 		this.modelo = modeloString;
 		this.anoFabricacao = anoFabricacaoInt;
 	}
-
-	public static Veiculo inputVeiculo(Scanner scanner) {
-		Print.tab("========================================================================================================================================================================================================================", 0);
-
-		Print.tab("Cadastro de veículo, por favor informe: ", 1);
-		
-		Print.tab("Placa do veículo: ", 0);
-		String placaString = scanner.nextLine();
-
-		Print.tab("Marca do veículo: ",0);
-		String marcaString = scanner.nextLine();
-		
-		Print.tab("Modelo do veículo: ",0);
-		String modeloString = scanner.nextLine();
-		
-		Print.tab("Ano de fabricação do veículo: ",0);
-		int anoFabricacaoString = scanner.nextInt();
-		
-		return new Veiculo(placaString, marcaString, modeloString, anoFabricacaoString);
-	}
 	
+	@Override
 	public String toString() {
 		return "[class: Veículo, placa: "+this.placa+", marca: "+this.marca+", modelo: "+this.modelo+", ano de fabricação: "+this.anoFabricacao+"]";
 	}

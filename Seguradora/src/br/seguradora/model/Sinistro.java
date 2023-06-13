@@ -1,66 +1,40 @@
 package br.seguradora.model;
 
-import java.util.Random; 		
+import java.time.LocalDate;
+
+import br.seguradora.util.Util; 		
 
 public class Sinistro {
-	
-	/* TODO: Class Seguradora
-	 *  
-	 *  add new attributes (feito)
-	 * 	UPDATE METHOD: jOptionalInputPaneSinistro()
-	 *  UPDATE METHOD: toString()
-	 * 
-	 * /
-	
-	/* Assinatura dos metodos implementados
-	 * 
-	 * 
-	 * public static Sinistro jOptionalInputPaneSinistro();
-	 * private void criarId()
-	 * public String toString();
-	 * 
-	 */
-	
 	
 	/* ANOTAÇÕES:
 	 * 
 	 */
 	
-	//Atributos de Classe
-	private final String id = String.valueOf(this.criarId());
-	private String data;
+	private final String id = String.valueOf(Util.criarId());
+	private LocalDate data;
 	private String endereco;
-	private Veiculo veiculo;
-	private Cliente cliente;
-	private Seguradora seguradora;
+	private Condutor condutor;
+	private Seguro seguro;
 
 
-    public Sinistro(String dataString, String endereString, Veiculo veiculoObj, Cliente clienteObj, Seguradora seguradoraObj) {
+    public Sinistro(LocalDate dataString, String endereString, Condutor objCondutor, Seguro objSeguro) {
         this.data = dataString;
         this.endereco = endereString;
-        this.cliente = clienteObj;
-        this.veiculo = veiculoObj;
-        this.seguradora = seguradoraObj;
-    }
-    
-    public Sinistro() {
+        this.condutor = objCondutor;
+        this.seguro = objSeguro;
     }
 
-    private int criarId() {
-    	Random random = new Random();
-		return random.nextInt(10000);
-    }
-  
+    @Override
     public String toString() {
-		return "[class: Sinistro, id: "+this.id+", data: "+this.data+", endereco: "+this.endereco+", Seguradora: "+this.seguradora.getNome()+", Cliente: "+this.cliente.getNome()+", Veiculo: "+this.veiculo.toString()+"]";
+		return "[class: Sinistro, id: "+this.id+", data: "+this.data+", endereco: "+this.endereco+", seguro: "+this.seguro.getId()+", cpf CONDUTOR: "+this.condutor.getCpf()+"]";
 	}
 
 	
-	  public String getData() {
+	  public LocalDate getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 
@@ -72,32 +46,24 @@ public class Sinistro {
 		this.endereco = endereco;
 	}
 
-	public Veiculo getVeiculo() {
-		return veiculo;
-	}
-
-	public void setVeiculo(Veiculo veiculo) {
-		this.veiculo = veiculo;
-	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public Seguradora getSeguradora() {
-		return seguradora;
-	}
-
-	public void setSeguradora(Seguradora seguradora) {
-		this.seguradora = seguradora;
-	}
-
 	public String getId() {
 		return id;
+	}
+
+	public Condutor getCondutor() {
+		return condutor;
+	}
+
+	public void setCondutor(Condutor condutor) {
+		this.condutor = condutor;
+	}
+
+	public Seguro getSeguro() {
+		return seguro;
+	}
+
+	public void setSeguro(Seguro seguro) {
+		this.seguro = seguro;
 	}
 
 }

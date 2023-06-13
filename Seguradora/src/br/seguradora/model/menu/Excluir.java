@@ -6,9 +6,11 @@ import br.seguradora.util.Print;
 import br.seguradora.util.Util;
 
 public enum Excluir {
-	EXCLUIR_CLIENTE(1,"Excluir cliente PF/PJ"),
-	EXCLUIR_SINISTRO(2, "Excluir veiculo"),
-	EXCLUIR_VEICULO(3, "Excluir sinistro");
+	EXCLUIR_CLIENTE(1,"Remover CLIENTE"),
+	EXCLUIR_FROTA(2, "Remover FROTA"),
+	EXCLUIR_VEICULO(3, "Remover VEICULO"),
+	EXCLUIR_SEGURO(4, "Cancelar SEGURO"),
+	EXCLUIR_CONDUTOR(5, "Desautorizar CONDUTOR");
 	
 	private final int code;
 	private final String nome;
