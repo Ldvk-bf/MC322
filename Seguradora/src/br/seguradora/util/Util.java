@@ -42,6 +42,7 @@ public class Util {
     }
 	
 	public static void basicStruture() {
+		//TODO CREATE
 		Seguradora seg = new Seguradora("Cesar motors", "92 9 96140802", "Ludivik@gmail.com", "Rua maia");
 		
 		Cliente objCliente1 = new ClientePF("Roberto", "Rua felix", "Masc", "07150760279", Util.parseLocalDate("30-01-2005"), "Superior", Util.parseLocalDate("30-01-2005"), "D", "92 9 96140802", "Ludivik@gmail.com");
@@ -72,5 +73,78 @@ public class Util {
 		
 		((ClientePJ) objCliente2).addFrota(objFrota1);
 		((ClientePJ) objCliente2).addFrota(objFrota2);
+		
+		objSeguro.autorizarCondutor(objCondutor);
+		objSeguro.gerarSinistro(objSinistro);
+		objCondutor.addSinistro(objSinistro);
+		
+		seg.gerarSeguro(objSeguro);
+		
+		//TODO PRINTS
+		Print.tab("========================================================================================================================================================================================================================", 0);
+		Print.tab("", 0);
+		Print.tab("SEGURARODA", 3);
+		Print.tab(seg.toString(), 3);
+
+		Print.tab("", 0);
+		Print.tab("", 0);
+		Print.tab("CLIENTES ", 3);
+		Print.tab(objCliente1.toString(), 3);
+		Print.tab(objCliente1.toString(), 3);
+		
+		Print.tab("", 0);
+		Print.tab("", 0);
+		Print.tab("VEICULOS ", 3);
+		Print.tab(objVeiculo1.toString(), 3);
+		Print.tab(objVeiculo2.toString(), 3);
+		Print.tab(objVeiculo3.toString(), 3);
+		Print.tab(objVeiculo4.toString(), 3);
+
+		Print.tab("", 0);
+		Print.tab("", 0);
+		Print.tab("FROTAS ", 3);
+		Print.tab(objFrota1.toString(), 3);
+		Print.tab(objFrota2.toString(), 3);
+
+		Print.tab("", 0);
+		Print.tab("", 0);
+		Print.tab("SEGURO ", 3);
+		Print.tab(objSeguro.toString(), 3);
+		
+		Print.tab("", 0);
+		Print.tab("", 0);
+		Print.tab("CONDUTOR ", 3);
+		Print.tab(objCondutor.toString(), 3);
+		
+		Print.tab("", 0);
+		Print.tab("", 0);
+		Print.tab("SINISTRO ", 3);
+		Print.tab(objCondutor.toString(), 3);
+		
+		Print.tab("", 0);
+		Print.tab("", 0);
+		Print.tab("CLIENTES por SEGURADORA ", 3);
+		Print.tab(seg.listarClientes((data) -> true).toString(), 3);
+		
+		Print.tab("", 0);
+		Print.tab("", 0);
+		Print.tab("SEGUROS por SEGURADORA ", 3);
+		Print.tab(seg.listarSeguros().toString(), 3);
+		
+		Print.tab("", 0);
+		Print.tab("", 0);
+		Print.tab("CONDUTORES por SEGURADORA ", 3);
+		Print.tab(seg.listarCondutor().toString(), 3);
+
+		Print.tab("", 0);
+		Print.tab("", 0);
+		Print.tab("VEICULOS por SEGURADORA ", 3);
+		Print.tab(seg.listarVeiculos().toString(), 3);
+
+		Print.tab("", 0);
+		Print.tab("", 0);
+		Print.tab("SINISTRO por SEGURADORA ", 3);
+		Print.tab(seg.listarSinistros().toString(), 3);
+		Print.tab("", 0);
 	}
 }
