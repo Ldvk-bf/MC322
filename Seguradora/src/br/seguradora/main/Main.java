@@ -20,7 +20,6 @@ public class Main {
 	public static void main(String[] args) {
 
 		Util.basicStruture();
-
 		listaSeguradoras = new LinkedList<Seguradora>();
 		String op;
 
@@ -87,5 +86,4 @@ public class Main {
 			}
 		} while (!op.equals("0"));
 	}
-
 }
