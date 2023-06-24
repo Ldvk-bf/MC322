@@ -2,6 +2,7 @@ package br.seguradora.util;
 
 import java.util.Scanner;
 
+import br.seguradora.interfaces.FuncaoValidador;
 import br.seguradora.model.Cliente;
 import br.seguradora.model.ClientePF;
 import br.seguradora.model.ClientePJ;
@@ -16,7 +17,7 @@ import br.seguradora.model.Veiculo;
 
 public class Input {
 
-	public static String scanString(Scanner scan, String label, Validar.FuncaoValidador condicao) {
+	public static String scanString(Scanner scan, String label, FuncaoValidador condicao) {
 		String dado;
 		do {
 			Print.tab(label, 0);
@@ -106,7 +107,7 @@ public class Input {
 		}
 
 		public static Cliente selecaoCliente(Scanner scan, Seguradora seg, boolean selecao,
-				Validar.FuncaoValidador condicao) {
+				FuncaoValidador condicao) {
 			String dado;
 
 			Print.tab(

@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Random;
 
+import br.seguradora.interfaces.Model;
 import br.seguradora.model.Cliente;
 import br.seguradora.model.ClientePF;
 import br.seguradora.model.ClientePJ;
@@ -22,20 +23,11 @@ public class Util {
 
 	static boolean validadoresAtivos = true;
 
-	static public interface funcao {
-		void executar();
-	}
-
-	static public abstract class Model {
-		abstract public String getPKAtribute();
-	}
-
 	static public LocalDate parseLocalDate(String data) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		return LocalDate.parse(data, formatter);
 	}
 
-	// TODO Uso de trycatch
 	static public String listarApenasPk(ArrayList<? extends Model> lista) {
 		String retorno = "[";
 		try {
@@ -60,7 +52,6 @@ public class Util {
 	}
 
 	public static void basicStruture() {
-		// TODO CREATE
 		Seguradora seg = new Seguradora("Cesar motors", "92 9 96140802", "Ludivik@gmail.com", "Rua maia");
 
 		Cliente objCliente1 = new ClientePF("Roberto", "Rua felix", "Masc", "07150760279",

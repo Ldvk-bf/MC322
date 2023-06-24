@@ -2,9 +2,10 @@ package br.seguradora.model;
 
 import java.util.ArrayList;
 
+import br.seguradora.interfaces.Model;
 import br.seguradora.util.Util;
 
-public class Frota extends Util.Model {
+public class Frota implements Model {
 
 	private String code;
 	private ArrayList<Veiculo> listaVeiculos = new ArrayList<Veiculo>();

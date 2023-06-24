@@ -2,9 +2,10 @@ package br.seguradora.model;
 
 import java.time.LocalDate;
 
+import br.seguradora.interfaces.Model;
 import br.seguradora.util.Util;
 
-public class Sinistro extends Util.Model {
+public class Sinistro implements Model {
 
 	/*
 	 * ANOTAÇÕES:

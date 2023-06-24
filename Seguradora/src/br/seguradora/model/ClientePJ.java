@@ -3,6 +3,7 @@ package br.seguradora.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import br.seguradora.interfaces.Model;
 import br.seguradora.util.Util;
 
 public class ClientePJ extends Cliente {

@@ -2,8 +2,8 @@ package br.seguradora.menu;
 
 import java.util.Scanner;
 
+import br.seguradora.interfaces.Funcao;
 import br.seguradora.util.Print;
-import br.seguradora.util.Util;
 
 public enum Excluir {
 	EXCLUIR_CLIENTE(1, "Remover CLIENTE"),
@@ -24,7 +24,7 @@ public enum Excluir {
 		return this.code;
 	}
 
-	public static void init(Scanner scan, Util.funcao... metodos) {
+	public static void init(Scanner scan, Funcao... metodos) {
 		String code;
 		do {
 			Print.tab(

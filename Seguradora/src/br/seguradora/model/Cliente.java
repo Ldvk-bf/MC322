@@ -2,9 +2,9 @@ package br.seguradora.model;
 
 import java.util.ArrayList;
 
-import br.seguradora.util.Util;
+import br.seguradora.interfaces.Model;
 
-public abstract class Cliente extends Util.Model {
+public abstract class Cliente implements Model {
 
 	/*
 	 * ANOTAÇÕES:

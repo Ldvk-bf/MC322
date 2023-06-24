@@ -3,9 +3,10 @@ package br.seguradora.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import br.seguradora.interfaces.Model;
 import br.seguradora.util.Util;
 
-public abstract class Seguro extends Util.Model {
+public abstract class Seguro implements Model {
 
 	private final String id = String.valueOf(Util.criarId());
 	private Cliente cliente;

@@ -1,8 +1,8 @@
 package br.seguradora.model;
 
-import br.seguradora.util.Util;
+import br.seguradora.interfaces.Model;
 
-public class Veiculo extends Util.Model {
+public class Veiculo implements Model {
 
 	/*
 	 * ANOTAÇÕES:

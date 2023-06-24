@@ -3,9 +3,10 @@ package br.seguradora.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import br.seguradora.interfaces.Model;
 import br.seguradora.util.Util;
 
-public class Condutor extends Util.Model {
+public class Condutor implements Model {
 
 	/*
 	 * ANOTAÇÕES:

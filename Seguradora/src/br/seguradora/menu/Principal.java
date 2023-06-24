@@ -2,9 +2,9 @@ package br.seguradora.menu;
 
 import java.util.Scanner;
 
+import br.seguradora.interfaces.Funcao;
 import br.seguradora.model.Seguradora;
 import br.seguradora.util.Print;
-import br.seguradora.util.Util;
 
 public enum Principal {
 	CADASTROS(1, "Menu cadastros"),
@@ -25,7 +25,7 @@ public enum Principal {
 		return this.code;
 	}
 
-	public static void init(Scanner scan, Seguradora seg, Util.funcao... metodos) {
+	public static void init(Scanner scan, Seguradora seg, Funcao... metodos) {
 		String code;
 		do {
 			Print.tab(

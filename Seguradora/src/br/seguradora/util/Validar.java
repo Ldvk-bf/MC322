@@ -4,11 +4,6 @@ import java.io.File;
 import java.util.regex.Pattern;
 
 public class Validar {
-
-	static public interface FuncaoValidador {
-		boolean executar(String dadoValidado);
-	}
-
 	public static boolean validarArquivoExiste(String path) {
 		File file = new File(path);
 		return file.exists();

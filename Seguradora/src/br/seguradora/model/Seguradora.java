@@ -3,9 +3,11 @@ package br.seguradora.model;
 import java.util.ArrayList;
 
 import br.seguradora.util.Validar;
+import br.seguradora.interfaces.FuncaoValidador;
+import br.seguradora.interfaces.Model;
 import br.seguradora.util.Util;
 
-public class Seguradora extends Util.Model {
+public class Seguradora implements Model {
 
 	/*
 	 * ANOTAÇÕES:
@@ -61,7 +63,7 @@ public class Seguradora extends Util.Model {
 		return true;
 	}
 
-	public ArrayList<Cliente> listarClientes(Validar.FuncaoValidador condicao) {
+	public ArrayList<Cliente> listarClientes(FuncaoValidador condicao) {
 		ArrayList<Cliente> lista = new ArrayList<>();
 		for (Cliente c : listaCliente) {
 			if (condicao.executar(c.getCodigoPessoa()))
