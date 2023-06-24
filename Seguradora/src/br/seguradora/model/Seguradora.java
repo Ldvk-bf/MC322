@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import br.seguradora.util.Validar;
 import br.seguradora.util.Util;
 
-public class Seguradora implements Util.primaryKey {
+public class Seguradora extends Util.Model {
 
 	/*
 	 * ANOTAÇÕES:
@@ -237,12 +237,12 @@ public class Seguradora implements Util.primaryKey {
 	public String toString() {
 		return "[class: Seguradora, nome: " + this.nome + ", telefone: " + this.telefone + ", email: " + this.email
 				+ ", endereco: " + this.endereco +
-				", lista de clientes - cpf:" + this.listarClientes((data) -> true) +
-				", lista de sinistros:" + listarSinistros() + " ]";
+				", lista de clientes:" + Util.listarApenasPk(this.listarClientes((data) -> true)) +
+				", lista de sinistros:" + Util.listarApenasPk(listarSinistros()) + " ]";
 	}
 
 	@Override
-	public String pkAtribute() {
+	public String getPKAtribute() {
 		return this.nome;
 	}
 

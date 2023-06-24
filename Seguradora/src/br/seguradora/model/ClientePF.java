@@ -3,6 +3,8 @@ package br.seguradora.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import br.seguradora.util.Util;
+
 public class ClientePF extends Cliente {
 
 	/*
@@ -70,7 +72,8 @@ public class ClientePF extends Cliente {
 	@Override
 	public String toString() {
 		return super.toString().substring(0, super.toString().length() - 1) + ", cpf: " + this.getCodigoPessoa()
-				+ ", veículos: " + this.getFrotaVeiculos().listarVeiculos() + ", data de nascimento: "
+				+ ", veículos: " + Util.listarApenasPk(this.getFrotaVeiculos().listarVeiculos())
+				+ ", data de nascimento: "
 				+ this.dataNascimento.toString() + ", educacao: " + this.educacao + ", data de licenca: "
 				+ this.dataLicenca + ", gênero: " + this.genero + "]";
 	}

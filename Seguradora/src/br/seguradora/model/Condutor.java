@@ -3,18 +3,21 @@ package br.seguradora.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Condutor {
-	
-	/* ANOTAÇÕES:
+import br.seguradora.util.Util;
+
+public class Condutor extends Util.Model {
+
+	/*
+	 * ANOTAÇÕES:
 	 * 
-	 * 	lab03
+	 * lab03
 	 * 
-	 * 	lab04
+	 * lab04
 	 * 
-	 * 	Lab05
+	 * Lab05
 	 * 
 	 */
-	
+
 	private final String cpf;
 	private LocalDate dataNascimento;
 	private String nome;
@@ -22,10 +25,9 @@ public class Condutor {
 	private String telefone;
 	private String email;
 	private ArrayList<Sinistro> listaSinistros = new ArrayList<Sinistro>();
-	
-	
-	
-	public Condutor(String cpfString, LocalDate dataNascimentoString, String nomeString,String enderecoString, String telefoneString, String emailString) {
+
+	public Condutor(String cpfString, LocalDate dataNascimentoString, String nomeString, String enderecoString,
+			String telefoneString, String emailString) {
 		this.cpf = cpfString;
 		this.nome = nomeString;
 		this.endereco = enderecoString;
@@ -34,27 +36,34 @@ public class Condutor {
 		this.dataNascimento = dataNascimentoString;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "[class: Condutor, nome: " + this.getNome() + ", cpf: " + this.getCpf() + ", data de nascimento: "
+				+ this.getDataNascimento() + ", endereco: " + this.getEndereco() + ", email: " + this.getEmail()
+				+ ", telefone: " + this.getTelefone() + ", sinistros: " + Util.listarApenasPk(this.listaSinistros)
+				+ "]";
+	}
+
+	@Override
+	public String getPKAtribute() {
+		return this.cpf;
+	}
+
 	public boolean addSinistro(Sinistro novoSinistro) {
-		if(novoSinistro != null)
+		if (novoSinistro != null)
 			return listaSinistros.add(novoSinistro);
 		return false;
 	}
 
 	public boolean removerSinistro(String idString) {
-		for(Sinistro sinistroObj : listaSinistros) 
-			if(sinistroObj.getId().equals(idString))
+		for (Sinistro sinistroObj : listaSinistros)
+			if (sinistroObj.getId().equals(idString))
 				return listaSinistros.remove(sinistroObj);
 		return false;
 	}
-	
+
 	public int qntdSinistro() {
 		return this.listaSinistros.size();
-	}
-	
-	@Override
-	public String toString() {
-		return "[class: Condutor, nome: "+this.getNome()+", cpf: "+this.getCpf()+", data de nascimento: "+this.getDataNascimento()+", endereco: "+this.getEndereco()+", email: "+this.getEmail()+", telefone: "+this.getTelefone()+", sinistros: "+this.listaSinistros+"]";
 	}
 
 	public String getNome() {
@@ -100,5 +109,4 @@ public class Condutor {
 	public String getCpf() {
 		return cpf;
 	}
-
 }

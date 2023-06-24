@@ -91,7 +91,9 @@ public class Input {
 			Print.tab("Adicionar um CLIENTE, por favor informe:", 1);
 			String[] novoCliente = new String[5];
 
-			String cadastroPessoaString = Input.scanString(scan, "Código de cadastro da PESSOA:", (data) -> true)
+			String cadastroPessoaString = Input
+					.scanString(scan, "Código de cadastro da PESSOA:",
+							(data) -> Validar.validarCPF(data) || Validar.validarCnpj(data))
 					.replaceAll("[^0-9]+", "");
 
 			novoCliente = Input.cliente.cadastro(scan);
@@ -101,7 +103,6 @@ public class Input {
 			} else {
 				seg.cadastrarCliente(Input.clientePJ.cadastro(scan, seg, novoCliente, cadastroPessoaString));
 			}
-			Print.labelInput(seg.listarClientes((data) -> true).toString(), 3);
 		}
 
 		public static Cliente selecaoCliente(Scanner scan, Seguradora seg, boolean selecao,

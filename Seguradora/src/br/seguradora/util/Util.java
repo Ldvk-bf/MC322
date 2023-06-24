@@ -17,6 +17,7 @@ import br.seguradora.model.Sinistro;
 import br.seguradora.model.Veiculo;
 
 public class Util {
+
 	static ArrayList<Integer> ids = new ArrayList<Integer>();
 
 	static boolean validadoresAtivos = true;
@@ -25,13 +26,26 @@ public class Util {
 		void executar();
 	}
 
-	static public interface primaryKey {
-		public String pkAtribute();
+	static public abstract class Model {
+		abstract public String getPKAtribute();
 	}
 
 	static public LocalDate parseLocalDate(String data) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		return LocalDate.parse(data, formatter);
+	}
+
+	// TODO Uso de trycatch
+	static public String listarApenasPk(ArrayList<? extends Model> lista) {
+		String retorno = "[";
+		try {
+			for (Model obj : lista) {
+				retorno += obj.getPKAtribute() + ", ";
+			}
+			return retorno.substring(0, retorno.length() - 2) + "]";
+		} catch (Exception e) {
+			return "[]";
+		}
 	}
 
 	// Torna ids unicos agora
@@ -130,7 +144,7 @@ public class Util {
 		Print.tab("", 0);
 		Print.tab("", 0);
 		Print.tab("SINISTRO ", 3);
-		Print.tab(objCondutor.toString(), 3);
+		Print.tab(objSinistro.toString(), 3);
 
 		Print.tab("", 0);
 		Print.tab("", 0);

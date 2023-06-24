@@ -2,35 +2,40 @@ package br.seguradora.model;
 
 import java.time.LocalDate;
 
-import br.seguradora.util.Util; 		
+import br.seguradora.util.Util;
 
-public class Sinistro {
-	
-	/* ANOTAÇÕES:
+public class Sinistro extends Util.Model {
+
+	/*
+	 * ANOTAÇÕES:
 	 * 
 	 */
-	
+
 	private final String id = String.valueOf(Util.criarId());
 	private LocalDate data;
 	private String endereco;
 	private Condutor condutor;
 	private Seguro seguro;
 
-
-    public Sinistro(LocalDate dataString, String endereString, Condutor objCondutor, Seguro objSeguro) {
-        this.data = dataString;
-        this.endereco = endereString;
-        this.condutor = objCondutor;
-        this.seguro = objSeguro;
-    }
-
-    @Override
-    public String toString() {
-		return "[class: Sinistro, id: "+this.id+", data: "+this.data+", endereco: "+this.endereco+", seguro: "+this.seguro.getId()+", cpf CONDUTOR: "+this.condutor.getCpf()+"]";
+	public Sinistro(LocalDate dataString, String endereString, Condutor objCondutor, Seguro objSeguro) {
+		this.data = dataString;
+		this.endereco = endereString;
+		this.condutor = objCondutor;
+		this.seguro = objSeguro;
 	}
 
-	
-	  public LocalDate getData() {
+	@Override
+	public String toString() {
+		return "[class: Sinistro, id: " + this.id + ", data: " + this.data + ", endereco: " + this.endereco
+				+ ", seguro: " + this.seguro.getId() + ", condutor: " + this.condutor.getPKAtribute() + "]";
+	}
+
+	@Override
+	public String getPKAtribute() {
+		return this.id;
+	}
+
+	public LocalDate getData() {
 		return data;
 	}
 

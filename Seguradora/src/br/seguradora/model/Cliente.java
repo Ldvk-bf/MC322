@@ -2,58 +2,66 @@ package br.seguradora.model;
 
 import java.util.ArrayList;
 
-public abstract class Cliente {
-	
-	/* ANOTAÇÕES:
+import br.seguradora.util.Util;
+
+public abstract class Cliente extends Util.Model {
+
+	/*
+	 * ANOTAÇÕES:
 	 * 
-	 * 	lab03
+	 * lab03
 	 * 
-	 * 	lab04
+	 * lab04
 	 * 
-	 * 	Lab05
-	 * 		Essa mudança de abstract vai mudar muita coisa
-	 * 		Pela fé
+	 * Lab05
+	 * Essa mudança de abstract vai mudar muita coisa
+	 * Pela fé
 	 * 
 	 */
-	
+
 	private final String codigoPessoa;
 	private String nome;
 	private String endereco;
 	private String telefone;
 	private String email;
-	
-	
-	public Cliente(String codigoPessoaString, String nomeString,String enderecoString, String telefoneString, String emailString) {
-		this.codigoPessoa = codigoPessoaString;
-		this.nome = nomeString;
-		this.endereco = enderecoString;
-		this.telefone = telefoneString;
-		this.email = emailString;
+
+	public Cliente(String codigoPessoa, String nome, String endereco, String telefone, String email) {
+		this.codigoPessoa = codigoPessoa;
+		this.nome = nome;
+		this.endereco = endereco;
+		this.telefone = telefone;
+		this.email = email;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "[class: Cliente, nome: "+this.getNome()+", endereco: "+this.getEndereco()+", email: "+this.getEmail()+", telefone: "+this.getTelefone()+"]";
+		return "[class: Cliente, nome: " + this.getNome() + ", endereco: " + this.getEndereco() + ", email: "
+				+ this.getEmail() + ", telefone: " + this.getTelefone() + "]";
+	}
+
+	@Override
+	public String getPKAtribute() {
+		return this.getCodigoPessoa();
 	}
 
 	public Veiculo selecionarVeiculo(String placaString) {
 		ArrayList<Veiculo> lista = this.listarVeiculos();
 		for (Veiculo veiculo : lista) {
-			if(veiculo.getPlaca().equals(placaString))
+			if (veiculo.getPlaca().equals(placaString))
 				return veiculo;
 		}
 		return null;
 	}
-	
+
 	public Frota selecionarFrota(String codigoString) {
-		for(Frota objFrota : getListaFrotas()) 
-			if(objFrota.getCode().equals(codigoString))
+		for (Frota objFrota : getListaFrotas())
+			if (objFrota.getCode().equals(codigoString))
 				return objFrota;
 		return null;
-	}	
-	
+	}
+
 	public abstract ArrayList<Frota> getListaFrotas();
-	
+
 	public abstract ArrayList<Sinistro> listarSinistros(Seguradora atualSeg);
 
 	public abstract ArrayList<Veiculo> listarVeiculos();
@@ -94,5 +102,4 @@ public abstract class Cliente {
 		return codigoPessoa;
 	}
 
-	
 }

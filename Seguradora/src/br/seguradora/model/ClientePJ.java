@@ -3,71 +3,75 @@ package br.seguradora.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import br.seguradora.util.Util;
+
 public class ClientePJ extends Cliente {
 
-	
-	/* ANOTAÇÕES lab03:
-	 * 	
-	 * 	lab03
-	 * 		Formato adotado para horario: "dd-MM-yyyy"
+	/*
+	 * ANOTAÇÕES lab03:
 	 * 
-	 * 		Dar uma olhada dps nesse atributo suspeito
+	 * lab03
+	 * Formato adotado para horario: "dd-MM-yyyy"
 	 * 
-	 * 	lab04
+	 * Dar uma olhada dps nesse atributo suspeito
+	 * 
+	 * lab04
 	 * 
 	 */
 
-	
 	private int qtdeFuncionarios;
 	private LocalDate dataFundacao;
 	private ArrayList<Frota> listaFrotas = new ArrayList<Frota>();
-	
-	public ClientePJ(String nomeString, String enderecoString, String cnpjString, LocalDate dataFundacaoString, int qtdeFuncionariosInt, String telefoneString, String emailString){
-		super(cnpjString,nomeString, enderecoString, telefoneString, emailString);
-        
+
+	public ClientePJ(String nomeString, String enderecoString, String cnpjString, LocalDate dataFundacaoString,
+			int qtdeFuncionariosInt, String telefoneString, String emailString) {
+		super(cnpjString, nomeString, enderecoString, telefoneString, emailString);
+
 		this.dataFundacao = dataFundacaoString;
 		this.qtdeFuncionarios = qtdeFuncionariosInt;
-		
-	}
-	
-	public boolean addFrota(Frota novoFrota) {
-		if(novoFrota != null)
-			return listaFrotas.add(novoFrota);
-		return false;
+
 	}
 
-	public boolean removerFrota(String codeString) {
-		for(Frota objFrota : listaFrotas) 
-			if(objFrota.getCode().equals(codeString))
-				return listaFrotas.remove(objFrota);
-		return false;
-	}
-	
 	@Override
 	public ArrayList<Veiculo> listarVeiculos() {
 		ArrayList<Veiculo> lista = new ArrayList<>();
-		for(Frota frotaObj : listaFrotas) {
+		for (Frota frotaObj : listaFrotas) {
 			lista.addAll(frotaObj.getListaVeiculos());
 		}
 		return lista;
 	}
-	
+
 	@Override
 	public ArrayList<Sinistro> listarSinistros(Seguradora atualSeg) {
 		ArrayList<Sinistro> listaSinistros = new ArrayList<Sinistro>();
-		for(Seguro seguroObj : atualSeg.getListaSeguros()) {
-			if(seguroObj instanceof SeguroPJ && this.getCodigoPessoa().equals(((SeguroPJ) seguroObj).getCliente().getCodigoPessoa())) {
+		for (Seguro seguroObj : atualSeg.getListaSeguros()) {
+			if (seguroObj instanceof SeguroPJ
+					&& this.getCodigoPessoa().equals(((SeguroPJ) seguroObj).getCliente().getCodigoPessoa())) {
 				listaSinistros.addAll(seguroObj.getListaSinistros());
 			}
 		}
 		return listaSinistros;
 	}
-	
+
 	@Override
 	public String toString() {
-		return super.toString().substring(0, super.toString().length() - 1)+", cnpj: "+this.getCodigoPessoa()+", data de fundação: "+this.getDataFundacao()+", quantidade de funcionarios: "+this.getQtdeFuncionarios()+", frotas: "+this.getListaFrotas()+"]";
+		return super.toString().substring(0, super.toString().length() - 1) + ", cnpj: " + this.getCodigoPessoa()
+				+ ", data de fundação: " + this.getDataFundacao() + ", quantidade de funcionarios: "
+				+ this.getQtdeFuncionarios() + ", frotas: " + Util.listarApenasPk(this.getListaFrotas()) + "]";
 	}
-	
+
+	public boolean addFrota(Frota novoFrota) {
+		if (novoFrota != null)
+			return listaFrotas.add(novoFrota);
+		return false;
+	}
+
+	public boolean removerFrota(String codeString) {
+		for (Frota objFrota : listaFrotas)
+			if (objFrota.getCode().equals(codeString))
+				return listaFrotas.remove(objFrota);
+		return false;
+	}
 
 	public LocalDate getDataFundacao() {
 		return dataFundacao;
@@ -77,11 +81,9 @@ public class ClientePJ extends Cliente {
 		this.dataFundacao = dataFundacao;
 	}
 
-
 	public int getQtdeFuncionarios() {
 		return qtdeFuncionarios;
 	}
-
 
 	public void setQtdeFuncionarios(int qtdeFuncionarios) {
 		this.qtdeFuncionarios = qtdeFuncionarios;

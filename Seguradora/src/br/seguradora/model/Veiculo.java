@@ -1,30 +1,39 @@
 package br.seguradora.model;
 
-public class Veiculo {
-	
-	/* ANOTAÇÕES:
+import br.seguradora.util.Util;
+
+public class Veiculo extends Util.Model {
+
+	/*
+	 * ANOTAÇÕES:
 	 * 
 	 * Rever o estado dessa variavel suspeita
 	 * 
-	 * 	lab05
+	 * lab05
 	 * 
 	 */
-	
+
 	private String placa;
 	private String marca;
 	private String modelo;
 	private int anoFabricacao;
-	
+
 	public Veiculo(String placaString, String marcaString, String modeloString, int anoFabricacaoInt) {
 		this.placa = placaString;
 		this.marca = marcaString;
 		this.modelo = modeloString;
 		this.anoFabricacao = anoFabricacaoInt;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "[class: Veículo, placa: "+this.placa+", marca: "+this.marca+", modelo: "+this.modelo+", ano de fabricação: "+this.anoFabricacao+"]";
+		return "[class: Veículo, placa: " + this.placa + ", marca: " + this.marca + ", modelo: " + this.modelo
+				+ ", ano de fabricação: " + this.anoFabricacao + "]";
+	}
+
+	@Override
+	public String getPKAtribute() {
+		return this.placa;
 	}
 
 	public int getAnoFabricacao() {
