@@ -84,6 +84,7 @@ public class Seguradora extends Util.Model {
 			if (chave.getCodigoPessoa().equals(codigoClienteString)) {
 				this.listaCliente.remove(chave);
 				valido = true;
+				return valido;
 			}
 		}
 		return valido;
