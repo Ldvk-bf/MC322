@@ -1,4 +1,4 @@
-package br.seguradora.model.menu;
+package br.seguradora.menu;
 
 import java.util.Scanner;
 
@@ -19,43 +19,44 @@ public enum Listar {
 	LISTAR_CONDUTORES_P_SEGURO(11, "Listar CONDUTORES por SEGURO"),
 	LISTAR_SINISTROS_P_SEGURO(12, "Listar SINISTROS por SEGURO"),
 	LISTAR_VEICULOS_P_FROTA(13, "Listar VEÍCULO por FROTA");
-	
+
 	private final int code;
 	private final String nome;
-	
+
 	Listar(int codeInt, String nomeString) {
 		this.code = codeInt;
 		this.nome = nomeString;
 	}
-	
+
 	public int getCode() {
 		return this.code;
 	}
 
-
-	public static void init(Scanner scan, Util.Funcao... metodos) {
+	public static void init(Scanner scan, Util.funcao... metodos) {
 		String code;
 		do {
-			Print.tab("========================================================================================================================================================================================================================", 0);
+			Print.tab(
+					"========================================================================================================================================================================================================================",
+					0);
 			Print.tab("Menu iterativo de listagens", 2);
 			Print.tab("Abaixo estão suas opções: ", 2);
 			Print.tab("", 0);
 			Print.tab("", 0);
-			
-			for(Listar v : Listar.values()) {
-				Print.listItem(" "+v.code+". "+v.nome, 3);
+
+			for (Listar v : Listar.values()) {
+				Print.listItem(" " + v.code + ". " + v.nome, 3);
 			}
-			Print.listItem(" 0. Sair", 3);    
-			
+			Print.listItem(" 0. Sair", 3);
+
 			code = scan.nextLine();
-			
-			for(Listar v : Listar.values()) {
-				if(String.valueOf(v.getCode()).equals(code)) {
+
+			for (Listar v : Listar.values()) {
+				if (String.valueOf(v.getCode()).equals(code)) {
 					metodos[v.getCode() - 1].executar();
 				}
 			}
-			
+
 		} while (!code.equals("0"));
-		
+
 	}
 }
