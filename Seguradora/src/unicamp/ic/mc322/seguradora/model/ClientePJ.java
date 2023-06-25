@@ -23,9 +23,9 @@ public class ClientePJ extends Cliente {
 	private LocalDate dataFundacao;
 	private ArrayList<Frota> listaFrotas = new ArrayList<Frota>();
 
-	public ClientePJ(String nomeString, String enderecoString, String cnpjString, LocalDate dataFundacaoString,
-			int qtdeFuncionariosInt, String telefoneString, String emailString) {
-		super(cnpjString, nomeString, enderecoString, telefoneString, emailString);
+	public ClientePJ(String cnpjString, String nomeString, String telefoneString, String enderecoString,
+			String emailString, LocalDate dataFundacaoString, int qtdeFuncionariosInt) {
+		super(cnpjString, nomeString, telefoneString, enderecoString, emailString);
 
 		this.dataFundacao = dataFundacaoString;
 		this.qtdeFuncionarios = qtdeFuncionariosInt;

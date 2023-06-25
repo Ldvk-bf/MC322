@@ -31,11 +31,11 @@ public class Arquivo {
 
     public static ArrayList<Model> lerArquivo(String nomeArquivo, Function<String, Model> funcao) {
         try {
-            nomeArquivo = "../file/" + nomeArquivo + ".csv";
+            nomeArquivo = "Seguradora\\src\\unicamp\\ic\\mc322\\seguradora\\file\\" + nomeArquivo + ".csv";
             BufferedReader leitor = new BufferedReader(new FileReader(nomeArquivo));
 
             ArrayList<Model> linhasArquivo = new ArrayList<>();
-            String linhaAtual;
+            String linhaAtual = leitor.readLine();
 
             while ((linhaAtual = leitor.readLine()) != null) {
                 linhasArquivo.add(funcao.apply(linhaAtual));
@@ -50,14 +50,55 @@ public class Arquivo {
         }
     }
 
+    public static ArrayList<String> buscarElementos(String nomeArquivo, String valor) {
+        try {
+            nomeArquivo = "Seguradora\\src\\unicamp\\ic\\mc322\\seguradora\\file\\" + nomeArquivo + ".csv";
+            BufferedReader leitor = new BufferedReader(new FileReader(nomeArquivo));
+
+            ArrayList<String> linhasBusca = new ArrayList<>();
+            String linhaAtual = leitor.readLine();
+
+            while ((linhaAtual = leitor.readLine()) != null) {
+                String[] substrings = linhaAtual.split(",");
+                if (substrings[0].equals(valor))
+                    linhasBusca.add(linhaAtual);
+            }
+
+            leitor.close();
+
+            return linhasBusca;
+
+        } catch (IOException e) {
+            Print.tab("ERRO: " + e.getMessage(), 1);
+            return null;
+        }
+    }
+
+    public static ArrayList<Model> lerArquivoHas(String nomeArquivoHas, String nomeArquivo, String valor,
+            Function<String, Model> funcao) {
+
+        ArrayList<Model> linhasArquivo = new ArrayList<>();
+
+        for (String linha : buscarElementos(nomeArquivoHas, valor)) {
+            String[] substrings = linha.split(",");
+            ArrayList<String> linhas = buscarElementos(nomeArquivo, substrings[1]);
+            if (linhas.size() != 0) {
+                String linhaAtual = linhas.get(0);
+                linhasArquivo.add(funcao.apply(linhaAtual));
+            }
+        }
+
+        return linhasArquivo;
+    }
+
     public static boolean excluirObjetoArquivo(String nomeArquivo, String valor) {
         try {
-            nomeArquivo = "../file/" + nomeArquivo + ".csv";
+            nomeArquivo = "Seguradora\\src\\unicamp\\ic\\mc322\\seguradora\\file\\" + nomeArquivo + ".csv";
             File arquivoTemporario = new File("../file/temp.csv");
             BufferedReader leitor = new BufferedReader(new FileReader(nomeArquivo));
             BufferedWriter escritor = new BufferedWriter(new FileWriter(arquivoTemporario));
 
-            String linhaAtual;
+            String linhaAtual = leitor.readLine();
             while ((linhaAtual = leitor.readLine()) != null) {
                 String[] substrings = linhaAtual.split(",");
                 if (!substrings[0].equals(valor)) {
@@ -76,42 +117,6 @@ public class Arquivo {
             Print.tab("ERRO: " + e.getMessage(), 1);
             return false;
         }
-    }
-
-    public static ArrayList<String> buscarElementos(String nomeArquivo, String valor) {
-        try {
-            nomeArquivo = "Seguradora/sr/br/seguradora/file/" + nomeArquivo + ".csv";
-            BufferedReader leitor = new BufferedReader(new FileReader(nomeArquivo));
-
-            ArrayList<String> linhasBusca = new ArrayList<>();
-            String linhaAtual;
-
-            while ((linhaAtual = leitor.readLine()) != null) {
-                String[] substrings = linhaAtual.split(",");
-                if (substrings[0].equals(valor))
-                    linhasBusca.add(linhaAtual);
-            }
-
-            leitor.close();
-            return linhasBusca;
-
-        } catch (IOException e) {
-            Print.tab("ERRO: " + e.getMessage(), 1);
-            return null;
-        }
-    }
-
-    public static ArrayList<Model> lerArquivoHas(String nomeArquivoHas, String nomeArquivo, String valor,
-            Function<String, Model> funcao) {
-
-        ArrayList<Model> linhasArquivo = new ArrayList<>();
-
-        for (String linha : buscarElementos(nomeArquivoHas, valor)) {
-            String[] substrings = linha.split(",");
-            linhasArquivo.add(funcao.apply(buscarElementos(nomeArquivo, substrings[1]).get(0)));
-        }
-
-        return linhasArquivo;
     }
 
 }

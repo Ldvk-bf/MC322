@@ -98,7 +98,10 @@ public class Validar {
 	}
 
 	public static boolean validarData(String data) {
-		return Pattern.matches("^(0[1-9]|1\\d|2\\d|3[01])-(0[1-9]|1[0-2])-\\d{4}$", data) || !Util.validadoresAtivos;
+		// return Pattern.matches("^(0[1-9]|1\\d|2\\d|3[01])-(0[1-9]|1[0-2])-\\d{4}$",
+		// data) || !Util.validadoresAtivos;
+		return Pattern.matches("^(\\\\d{2})-(0[1-9]|1[0-2])-(0[1-9]|1\\\\d|2\\\\d|3[01])$", data)
+				|| !Util.validadoresAtivos;
 	}
 
 	public static boolean validarNumero(String numero) {

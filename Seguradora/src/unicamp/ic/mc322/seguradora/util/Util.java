@@ -24,7 +24,7 @@ public class Util {
 	static boolean validadoresAtivos = true;
 
 	static public LocalDate parseLocalDate(String data) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		return LocalDate.parse(data, formatter);
 	}
 
@@ -54,11 +54,10 @@ public class Util {
 	public static void basicStruture() {
 		Seguradora seg = new Seguradora("Cesar motors", "92 9 96140802", "Ludivik@gmail.com", "Rua maia");
 
-		Cliente objCliente1 = new ClientePF("Roberto", "Rua felix", "Masc", "07150760279", "Superior",
-				Util.parseLocalDate("30-01-2005"), "92 9 96140802",
-				"Ludivik@gmail.com");
-		Cliente objCliente2 = new ClientePJ("Americanas", "Rua paulista", "85528735000145",
-				Util.parseLocalDate("30-01-2005"), 100, "92 3632-2025", "Americanas@gmil.com");
+		Cliente objCliente1 = new ClientePF("Roberto", "07150760279", "Rua felix", "Ludivik@gmail.com", "Masc",
+				"Superior", "92 9 96140802", Util.parseLocalDate("2005-01-30"));
+		Cliente objCliente2 = new ClientePJ("85528735000145", "Americanas", "Rua paulista", "92 3632-2025",
+				"Americanas@gmil.com", Util.parseLocalDate("2005-01-30"), 100);
 
 		Frota objFrota1 = new Frota("Am1");
 		Frota objFrota2 = new Frota("Am2");
@@ -68,15 +67,15 @@ public class Util {
 		Veiculo objVeiculo3 = new Veiculo("CCC1C11", "Chevrolet", "Onix", 2010);
 		Veiculo objVeiculo4 = new Veiculo("DDD1D11", "Chevrolet", "Onix", 2010);
 
-		Condutor objCondutor = new Condutor("26714270852", Util.parseLocalDate("30-01-2005"), "Luccas", "Rua triste",
+		Condutor objCondutor = new Condutor("26714270852", Util.parseLocalDate("2005-01-30"), "Luccas", "Rua triste",
 				"92 3156-2315", "Qlqr@gmail.com");
 
-		Seguro objSeguro = new SeguroPF(String.valueOf(Util.criarId()), Util.parseLocalDate("30-01-2005"),
-				Util.parseLocalDate("30-01-2005"),
+		Seguro objSeguro = new SeguroPF(String.valueOf(Util.criarId()), Util.parseLocalDate("2005-01-30"),
+				Util.parseLocalDate("2005-01-30"),
 				objCliente1.getCodigoPessoa(), objVeiculo1.getPlaca());
 		objSeguro.setSeguradora(seg);
 
-		Sinistro objSinistro = new Sinistro(String.valueOf(Util.criarId()), Util.parseLocalDate("30-01-2005"),
+		Sinistro objSinistro = new Sinistro(String.valueOf(Util.criarId()), Util.parseLocalDate("2005-01-30"),
 				"Rua raiva", objCondutor.getCpf());
 		objSinistro.setSeguro(objSeguro);
 

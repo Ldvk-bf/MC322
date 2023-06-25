@@ -29,9 +29,9 @@ public class ClientePF extends Cliente {
 	private LocalDate dataNascimento;
 	private Frota frotaVeiculos = new Frota("");
 
-	public ClientePF(String nomeString, String enderecoString, String generoString, String cpfString,
-			String educacaoString, LocalDate dataNascimentoLocalDate, String telefoneString, String emailString) {
-		super(cpfString, nomeString, enderecoString, telefoneString, emailString);
+	public ClientePF(String cpfString, String nomeString, String telefoneString, String enderecoString,
+			String emailString, String generoString, String educacaoString, LocalDate dataNascimentoLocalDate) {
+		super(cpfString, nomeString, telefoneString, enderecoString, emailString);
 
 		this.educacao = educacaoString;
 		this.genero = generoString;

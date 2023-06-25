@@ -61,7 +61,7 @@ public class Seguradora extends Model {
 		return "[class: Seguradora, nome: " + this.nome + ", telefone: " + this.telefone + ", email: " + this.email
 				+ ", endereco: " + this.endereco +
 				", lista de clientes:" + Util.listarApenasPk(this.listarClientes((data) -> true)) +
-				", lista de sinistros:" + Util.listarApenasPk(listarSinistros()) + " ]";
+				", lista de seguro:" + Util.listarApenasPk(listarSeguros()) + " ]";
 	}
 
 	@Override

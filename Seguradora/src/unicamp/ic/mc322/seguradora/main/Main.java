@@ -38,55 +38,58 @@ public class Main {
 
 		// TODO FAZER ESSE PROCESSO RECURSSICAMENTE
 		try {
-			for (Model m : Arquivo.lerArquivo("seguradoras", (linha) -> {
+			for (Model seg : Arquivo.lerArquivo("seguradoras", (linha) -> {
 				String[] dados = linha.split(",");
 				return new Seguradora(dados[0], dados[1], dados[2], dados[3]);
 			})) {
-				listaSeguradoras.add((Seguradora) m);
-				for (Model m1 : Arquivo.lerArquivoHas("seguradora_has_clientes", "clientesPF",
-						((Seguradora) m).getNome(),
+				listaSeguradoras.add((Seguradora) seg);
+				for (Model cliente : Arquivo.lerArquivoHas("seguradora_has_clientes", "clientesPF",
+						((Seguradora) seg).getNome(),
 						(linha) -> {
 							String[] dados = linha.split(",");
 							return new ClientePF(dados[0], dados[1], dados[2], dados[3], dados[4],
-									Util.parseLocalDate(dados[5]),
-									dados[6], dados[7]);
+									dados[5], dados[6], Util.parseLocalDate(dados[7]));
+
 						})) {
-					((Seguradora) m).cadastrarCliente((Cliente) m1);
-					for (Model m2 : Arquivo.lerArquivoHas("cliente_has_veiculos", "veiculos",
-							((Cliente) m).getCodigoPessoa(),
+					((Seguradora) seg).cadastrarCliente((Cliente) cliente);
+					for (Model veiculo : Arquivo.lerArquivoHas("cliente_has_veiculos", "veiculos",
+							((Cliente) cliente).getCodigoPessoa(),
 							(linha) -> {
 								String[] dados = linha.split(",");
 								return new Veiculo(dados[0], dados[1], dados[2], Integer.parseInt(dados[3]));
 							})) {
-						((ClientePF) m1).getFrotaVeiculos().addVeiculo((Veiculo) m2);
+						((ClientePF) cliente).getFrotaVeiculos().addVeiculo((Veiculo) veiculo);
 					}
 				}
-				for (Model m1 : Arquivo.lerArquivoHas("seguradora_has_clientes", "clientesPJ",
-						((Seguradora) m).getNome(),
+				for (Model cliente : Arquivo.lerArquivoHas("seguradora_has_clientes", "clientesPJ",
+						((Seguradora) seg).getNome(),
 						(linha) -> {
 							String[] dados = linha.split(",");
-							return new ClientePJ(dados[0], dados[1], dados[2], Util.parseLocalDate(dados[3]),
-									Integer.parseInt(dados[4]), dados[5], dados[6]);
+							return new ClientePJ(dados[0], dados[1], dados[2], dados[3],
+									dados[4], Util.parseLocalDate(dados[5]), Integer.parseInt(dados[6]));
 						})) {
-					((Seguradora) m).cadastrarCliente((Cliente) m1);
-					for (Model m2 : Arquivo.lerArquivoHas("cliente_has_frotas", "frotas",
-							((Cliente) m).getCodigoPessoa(),
+					((Seguradora) seg).cadastrarCliente((Cliente) cliente);
+					for (Model frota : Arquivo.lerArquivoHas("cliente_has_frotas", "frotas",
+							((Cliente) cliente).getCodigoPessoa(),
 							(linha) -> {
 								String[] dados = linha.split(",");
 								return new Frota(dados[0]);
 							})) {
-						((ClientePJ) m1).addFrota((Frota) m2);
-						for (Model m3 : Arquivo.lerArquivoHas("frota_has_veiculos", "veiculos",
-								((Frota) m).getCode(),
+						Print.tab(((Frota) frota).getCode(), 5);
+						((ClientePJ) cliente).addFrota((Frota) frota);
+						for (Model veiculo : Arquivo.lerArquivoHas("frota_has_veiculos", "veiculos",
+								((Frota) frota).getCode(),
 								(linha) -> {
 									String[] dados = linha.split(",");
 									return new Veiculo(dados[0], dados[1], dados[2], Integer.parseInt(dados[3]));
 								})) {
-							((Frota) m3).addVeiculo((Veiculo) m2);
+							((Frota) frota).addVeiculo((Veiculo) veiculo);
 						}
 					}
 				}
-				for (Model m1 : Arquivo.lerArquivoHas("seguradora_has_seguros", "seguros", ((Seguradora) m).getNome(),
+
+				for (Model seguro : Arquivo.lerArquivoHas("seguradora_has_seguros", "seguros",
+						((Seguradora) seg).getNome(),
 						(linha) -> {
 							String[] dados = linha.split(",");
 							if (Validar.validarPlaca(dados[6])) {
@@ -99,30 +102,31 @@ public class Main {
 										dados[3], dados[4]);
 							}
 						})) {
-					((Seguradora) m).gerarSeguro((Seguro) m1);
-					for (Model m2 : Arquivo.lerArquivoHas("seguro_has_condutores", "condutores",
-							((Seguro) m1).getId(),
+					((Seguradora) seg).gerarSeguro((Seguro) seguro);
+					for (Model condutor : Arquivo.lerArquivoHas("seguro_has_condutores", "condutores",
+							((Seguro) seguro).getId(),
 							(linha) -> {
 								String[] dados = linha.split(",");
 								return new Condutor(dados[0], Util.parseLocalDate(dados[1]), dados[2], dados[3],
 										dados[4],
 										dados[5]);
 							})) {
-						((Seguro) m1).autorizarCondutor((Condutor) m2);
+						((Seguro) seguro).autorizarCondutor((Condutor) condutor);
 					}
-					for (Model m2 : Arquivo.lerArquivoHas("seguro_has_sinistros", "sinistros",
-							((Sinistro) m1).getId(),
+					for (Model sinistro : Arquivo.lerArquivoHas("seguro_has_sinistros", "sinistros",
+							((Seguro) seguro).getId(),
 							(linha) -> {
 								String[] dados = linha.split(",");
 								return new Sinistro(dados[0], Util.parseLocalDate(dados[1]), dados[2], dados[3]);
 							})) {
-						((Sinistro) m2).setSeguro((Seguro) m1);
-						((Seguro) m1).gerarSinistro((Sinistro) m2);
+						((Sinistro) sinistro).setSeguro((Seguro) seguro);
+						((Seguro) seguro).gerarSinistro((Sinistro) sinistro);
 					}
 				}
 			}
+		} catch (
 
-		} catch (Exception e) {
+		Exception e) {
 			Print.tab("ERRO: " + e.getMessage(), 1);
 		}
 		Util.basicStruture();

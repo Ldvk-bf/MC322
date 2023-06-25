@@ -83,7 +83,7 @@ public class Input {
 
 			String emailString = Input.scanString(scan, "Email do CLIENTE", (data) -> Validar.validarEmail(data));
 
-			return new String[] { nomeString, enderecoString, telefoneString, emailString };
+			return new String[] { nomeString, telefoneString, enderecoString, emailString };
 		}
 
 		public static void addCliente(Scanner scan, Seguradora seg) {
@@ -116,7 +116,7 @@ public class Input {
 					0);
 			Print.tab("Lista de CLIENTES", 1);
 			Print.tab("", 0);
-			Print.tab(seg.listarClientes(condicao).toString(), 0);
+			Print.tab(String.join("\n\n[class", seg.listarClientes(condicao).toString().split(", \\[class")), 0);
 			Print.tab("", 0);
 			if (selecao && !seg.listarClientes(condicao).isEmpty())
 				dado = Input
@@ -155,9 +155,8 @@ public class Input {
 			String qtdeFuncionariosString = Input.scanString(scan, "Quantidade de funcionarios da PESSOA JURIDICA:",
 					(data) -> Validar.validarNumero(data));
 
-			return new ClientePJ(novoCliente[0], novoCliente[1], cadastroString,
-					Util.parseLocalDate(dataFundacaoString), Integer.parseInt(qtdeFuncionariosString), novoCliente[2],
-					novoCliente[3]);
+			return new ClientePJ(cadastroString, novoCliente[0], novoCliente[1], novoCliente[2], novoCliente[3],
+					Util.parseLocalDate(dataFundacaoString), Integer.parseInt(qtdeFuncionariosString));
 		}
 	}
 
@@ -178,9 +177,8 @@ public class Input {
 			String dataNascimentoLocalDate = Input.scanString(scan,
 					"Data de nascimento da PESSOA FÍSICA (EX: 30-01-2005):", (data) -> Validar.validarData(data));
 
-			return new ClientePF(novoCliente[0], novoCliente[1], generoString, cadastroString,
-					educacaoString, Util.parseLocalDate(dataNascimentoLocalDate), novoCliente[2],
-					novoCliente[3]);
+			return new ClientePF(cadastroString, novoCliente[0], novoCliente[1], novoCliente[2], novoCliente[3],
+					generoString, educacaoString, Util.parseLocalDate(dataNascimentoLocalDate));
 		}
 	}
 
@@ -222,7 +220,7 @@ public class Input {
 					0);
 			Print.tab("Lista de FROTAS por CLIENTE", 1);
 			Print.tab("", 0);
-			Print.tab(cliente.getListaFrotas().toString(), 0);
+			Print.tab(String.join("\n\n[class", cliente.getListaFrotas().toString().split(", \\[class")), 0);
 			Print.tab("", 0);
 			if (selecao && !cliente.getListaFrotas().isEmpty())
 				dado = Input.scanString(scan, "Digite o codigo da frota para SELECIONAR", (data) -> true);
@@ -293,7 +291,7 @@ public class Input {
 					0);
 			Print.tab("Lista de VEICULOS", 1);
 			Print.tab("", 0);
-			Print.tab(seg.listarVeiculos().toString(), 0);
+			Print.tab(String.join("\n\n[class", seg.listarVeiculos().toString().split(", \\[class")), 0);
 			Print.tab("", 0);
 			if (selecao && !seg.listarVeiculos().isEmpty())
 				dado = Input.scanString(scan, "Digite o código da placa para SELECIONAR",
@@ -315,7 +313,7 @@ public class Input {
 					0);
 			Print.tab("Lista de VEÍCULOS por CLIENTE", 1);
 			Print.tab("", 0);
-			Print.tab(cliente.listarVeiculos().toString(), 0);
+			Print.tab(String.join("\n\n[class", cliente.listarVeiculos().toString().split(", \\[class")), 0);
 			Print.tab("", 0);
 			if (selecao && !cliente.listarVeiculos().isEmpty())
 				dado = Input.scanString(scan, "Digite o codigo da placa para SELECIONAR", (data) -> true);
@@ -340,7 +338,7 @@ public class Input {
 					0);
 			Print.tab("Lista de VEÍCULOS por FROTA", 1);
 			Print.tab("", 0);
-			Print.tab(frota.getListaVeiculos().toString(), 0);
+			Print.tab(String.join("\n\n[class", frota.getListaVeiculos().toString().split(", \\[class")), 0);
 			Print.tab("", 0);
 			if (selecao && !frota.getListaVeiculos().isEmpty())
 				dado = Input.scanString(scan, "Digite o código de placa para SELECIONAR", (data) -> true);
@@ -427,7 +425,7 @@ public class Input {
 					0);
 			Print.tab("Lista de SEGUROS", 1);
 			Print.tab("", 0);
-			Print.tab(seg.listarSeguros().toString(), 0);
+			Print.tab(String.join("\n\n[class", seg.listarSeguros().toString().split(", \\[class")), 0);
 			Print.tab("", 0);
 			if (selecao && !seg.listarSeguros().isEmpty())
 				dado = Input.scanString(scan, "Digite o id para SELECIONAR", (data) -> Validar.validarNumero(data));
@@ -449,7 +447,10 @@ public class Input {
 					0);
 			Print.tab("Lista de SEGUROS por CLIENTE", 1);
 			Print.tab("", 0);
-			Print.tab(seg.listarSegurosPorCliente(cliente.getCodigoPessoa()).toString(), 0);
+			Print.tab(
+					String.join("\n\n[class",
+							seg.listarSegurosPorCliente(cliente.getCodigoPessoa()).toString().split(", \\[class")),
+					0);
 			Print.tab("", 0);
 			if (selecao && !seg.listarSegurosPorCliente(cliente.getCodigoPessoa()).isEmpty())
 				dado = Input.scanString(scan, "Digite o id para SELECIONAR", (data) -> Validar.validarNumero(data));
@@ -552,7 +553,7 @@ public class Input {
 					0);
 			Print.tab("Lista de CONDUTORES", 1);
 			Print.tab("", 0);
-			Print.tab(seg.listarCondutor().toString(), 0);
+			Print.tab(String.join("\n\n[class", seg.listarCondutor().toString().split(", \\[class")), 0);
 			Print.tab("", 0);
 			if (selecao && !seg.listarCondutor().isEmpty())
 				dado = Input.scanString(scan, "Digite o cpf para SELECIONAR", (data) -> Validar.validarCPF(data))
@@ -576,7 +577,10 @@ public class Input {
 					0);
 			Print.tab("Lista de CONDUTORES por CLIENTE", 1);
 			Print.tab("", 0);
-			Print.tab(seg.listarCondutoresPorCliente(cliente.getCodigoPessoa()).toString(), 0);
+			Print.tab(
+					String.join("\n\n[class",
+							seg.listarCondutoresPorCliente(cliente.getCodigoPessoa()).toString().split(", \\[class")),
+					0);
 			Print.tab("", 0);
 			if (selecao && !seg.listarCondutoresPorCliente(cliente.getCodigoPessoa()).isEmpty())
 				dado = Input.scanString(scan, "Digite o cpf do CONDUTOR para SELECIONAR",
@@ -599,7 +603,10 @@ public class Input {
 					0);
 			Print.tab("Lista de CONDUTORES por SEGURO", 1);
 			Print.tab("", 0);
-			Print.tab(seg.listarCondutoresPorSeguro(seguro.getId()).toString(), 0);
+			Print.tab(
+					String.join("\n\n[class",
+							seg.listarCondutoresPorSeguro(seguro.getId()).toString().split(", \\[class")),
+					0);
 			Print.tab("", 0);
 			if (selecao && !seg.listarCondutoresPorSeguro(seguro.getId()).isEmpty())
 				dado = Input.scanString(scan, "Digite o cpf do CONDUTOR para SELECIONAR",
@@ -671,7 +678,7 @@ public class Input {
 					0);
 			Print.tab("Lista de SINISTROS", 1);
 			Print.tab("", 0);
-			Print.tab(seg.listarCondutor().toString(), 0);
+			Print.tab(String.join("\n\n[class", seg.listarCondutor().toString().split(", \\[class")), 0);
 			Print.tab("", 0);
 			if (selecao && !seg.listarCondutor().isEmpty())
 				dado = Input.scanString(scan, "Digite o cpf para SELECIONAR", (data) -> Validar.validarCPF(data))
@@ -695,7 +702,10 @@ public class Input {
 					0);
 			Print.tab("Lista de SINISTROS por CLIENTE", 1);
 			Print.tab("", 0);
-			Print.tab(seg.listarSinistrosPorCliente(cliente.getCodigoPessoa()).toString(), 0);
+			Print.tab(
+					String.join("\n\n[class",
+							seg.listarSinistrosPorCliente(cliente.getCodigoPessoa()).toString().split(", \\[class")),
+					0);
 			Print.tab("", 0);
 			if (selecao && !seg.listarSinistrosPorCliente(cliente.getCodigoPessoa()).isEmpty())
 				dado = Input.scanString(scan, "Digite o id do CONDUTOR para SELECIONAR",
@@ -718,8 +728,9 @@ public class Input {
 					0);
 			Print.tab("Lista de SINISTROS por SEGURO", 1);
 			Print.tab("", 0);
-			Print.tab(seg.listarSinistrosPorSeguro(seguro.getId()).toString(), 0);
-			Print.tab("", 0);
+			Print.tab(String.join("\n\n[class",
+					seg.listarSinistrosPorSeguro(seguro.getId()).toString().split(", \\[class")), 0);
+			Print.listItem("Quantidade de elementos: " + seg.listarSinistrosPorSeguro(seguro.getId()).size(), 2);
 			if (selecao && !seg.listarSinistrosPorSeguro(seguro.getId()).isEmpty())
 				dado = Input.scanString(scan, "Digite o id do CONDUTOR para SELECIONAR",
 						(data) -> Validar.validarNumero(data));

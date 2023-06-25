@@ -23,7 +23,7 @@ public abstract class Cliente extends Model {
 	private String telefone;
 	private String email;
 
-	public Cliente(String codigoPessoa, String nome, String endereco, String telefone, String email) {
+	public Cliente(String codigoPessoa, String nome, String telefone, String endereco, String email) {
 		this.codigoPessoa = codigoPessoa;
 		this.nome = nome;
 		this.endereco = endereco;
