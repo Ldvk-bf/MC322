@@ -1,4 +1,4 @@
-package br.seguradora.model;
+package unicamp.ic.mc322.seguradora.model;
 
 import java.util.ArrayList;
 

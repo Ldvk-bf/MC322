@@ -1,9 +1,9 @@
-package br.seguradora.menu;
+package unicamp.ic.mc322.seguradora.menu;
 
 import java.util.Scanner;
 
-import br.seguradora.interfaces.Funcao;
-import br.seguradora.util.Print;
+import unicamp.ic.mc322.seguradora.interfaces.Funcao;
+import unicamp.ic.mc322.seguradora.util.Print;
 
 public enum Excluir {
 	EXCLUIR_CLIENTE(1, "Remover CLIENTE"),

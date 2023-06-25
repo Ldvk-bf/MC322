@@ -80,7 +80,6 @@ public class Arquivo {
 
     public static ArrayList<String> buscarElementos(String nomeArquivo, String valor) {
         try {
-            Seguradora\src\br\seguradora\file\seguradoras.csv
             nomeArquivo = "Seguradora/sr/br/seguradora/file/" + nomeArquivo + ".csv";
             BufferedReader leitor = new BufferedReader(new FileReader(nomeArquivo));
 
