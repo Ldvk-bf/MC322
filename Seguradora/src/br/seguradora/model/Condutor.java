@@ -50,6 +50,11 @@ public class Condutor implements Model {
 		return this.cpf;
 	}
 
+	@Override
+	public String[] atributos() {
+		return new String[] { "NOME", "CPF", "DATA_NASCIMENTO", "ENDERECO", "EMAIL", "TELEFONE" };
+	}
+
 	public boolean addSinistro(Sinistro novoSinistro) {
 		if (novoSinistro != null)
 			return listaSinistros.add(novoSinistro);

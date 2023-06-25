@@ -34,6 +34,12 @@ public class SeguroPJ extends Seguro {
 		return super.toString().substring(0, super.toString().length() - 1) + ", frota: " + this.getFrota() + "]";
 	}
 
+	@Override
+	public String[] atributos() {
+		return new String[] { "ID", "DATA_INICIO", "DATA_FIM", "CLIENTE", "FROTA", "SEGURADORA", "LISTA_SINISTROS",
+				"LISTA_CONDUTORES", "VALOR_MENSAL" };
+	}
+
 	public Frota getFrota() {
 		return frota;
 	}

@@ -36,6 +36,11 @@ public class Veiculo implements Model {
 		return this.placa;
 	}
 
+	@Override
+	public String[] atributos() {
+		return new String[] { "PLACA", "MARCA", "MODELO", "ANO_FAB" };
+	}
+
 	public int getAnoFabricacao() {
 		return anoFabricacao;
 	}

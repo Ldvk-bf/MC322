@@ -26,20 +26,15 @@ public class ClientePF extends Cliente {
 
 	private String genero;
 	private String educacao;
-	private String classeEconomica;
-	private LocalDate dataLicenca;
 	private LocalDate dataNascimento;
 	private Frota frotaVeiculos = new Frota("");
 
 	public ClientePF(String nomeString, String enderecoString, String generoString, String cpfString,
-			LocalDate dataLicencaLocalDate, String educacaoString, LocalDate dataNascimentoLocalDate,
-			String classeEconomicaString, String telefoneString, String emailString) {
+			String educacaoString, LocalDate dataNascimentoLocalDate, String telefoneString, String emailString) {
 		super(cpfString, nomeString, enderecoString, telefoneString, emailString);
 
 		this.educacao = educacaoString;
 		this.genero = generoString;
-		this.classeEconomica = classeEconomicaString;
-		this.dataLicenca = dataLicencaLocalDate;
 		this.dataNascimento = dataNascimentoLocalDate;
 		this.frotaVeiculos.setCode(getCodigoPessoa());
 
@@ -74,8 +69,14 @@ public class ClientePF extends Cliente {
 		return super.toString().substring(0, super.toString().length() - 1) + ", cpf: " + this.getCodigoPessoa()
 				+ ", veículos: " + Util.listarApenasPk(this.getFrotaVeiculos().listarVeiculos())
 				+ ", data de nascimento: "
-				+ this.dataNascimento.toString() + ", educacao: " + this.educacao + ", data de licenca: "
-				+ this.dataLicenca + ", gênero: " + this.genero + "]";
+				+ this.dataNascimento.toString() + ", educacao: " + this.educacao + ", gênero: " + this.genero + "]";
+	}
+
+	@Override
+	public String[] atributos() {
+		String[] atributos = { "NOME", "ENDERECO", "CPF", "DATA_NASCIMENTO", "GENERO", "EDUCACAO", "DATA_LICENSA",
+				"CLASSE_ECONOMICA", "TELEFONE", "EMAIL" };
+		return atributos;
 	}
 
 	public String getGenero() {
@@ -92,22 +93,6 @@ public class ClientePF extends Cliente {
 
 	public void setEducacao(String educacao) {
 		this.educacao = educacao;
-	}
-
-	public String getClasseEconomica() {
-		return classeEconomica;
-	}
-
-	public void setClasseEconomica(String classeEconomica) {
-		this.classeEconomica = classeEconomica;
-	}
-
-	public LocalDate getDataLicenca() {
-		return dataLicenca;
-	}
-
-	public void setDataLicenca(LocalDate dataLicenca) {
-		this.dataLicenca = dataLicenca;
 	}
 
 	public LocalDate getDataNascimento() {

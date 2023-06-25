@@ -50,6 +50,12 @@ public class SeguroPF extends Seguro {
 		return this.getId();
 	}
 
+	@Override
+	public String[] atributos() {
+		return new String[] { "ID", "DATA_INICIO", "DATA_FIM", "CLIENTE", "VEICULO", "SEGURADORA", "LISTA_SINISTROS",
+				"LISTA_CONDUTORES", "VALOR_MENSAL" };
+	}
+
 	public Veiculo getVeiculo() {
 		return veiculo;
 	}

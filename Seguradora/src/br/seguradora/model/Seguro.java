@@ -64,6 +64,11 @@ public abstract class Seguro implements Model {
 		return this.getId();
 	}
 
+	@Override
+	public String[] atributos() {
+		return new String[] { "ID", "DATA_INICIO", "DATA_FIM", "SEGURADORA", "LISTA_SINISTROS", "LISTA_CONDUTORES" };
+	}
+
 	public abstract int calcularValor(Seguradora seg);
 
 	public LocalDate getDataInicio() {

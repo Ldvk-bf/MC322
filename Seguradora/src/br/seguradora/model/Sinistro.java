@@ -36,6 +36,11 @@ public class Sinistro implements Model {
 		return this.id;
 	}
 
+	@Override
+	public String[] atributos() {
+		return new String[] { "ID", "DATA", "ENDERECO", "CONDUTOR", "SEGURO" };
+	}
+
 	public LocalDate getData() {
 		return data;
 	}

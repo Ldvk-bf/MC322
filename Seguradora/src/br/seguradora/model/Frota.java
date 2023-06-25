@@ -24,6 +24,11 @@ public class Frota implements Model {
 		return this.code;
 	}
 
+	@Override
+	public String[] atributos() {
+		return new String[] { "CODE", "LISTA_VEICULOS" };
+	}
+
 	public boolean addVeiculo(Veiculo novoVeiculo) {
 		if (novoVeiculo != null)
 			return listaVeiculos.add(novoVeiculo);

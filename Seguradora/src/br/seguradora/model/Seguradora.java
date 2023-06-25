@@ -57,6 +57,24 @@ public class Seguradora implements Model {
 		this.endereco = endereco;
 	}
 
+	@Override
+	public String toString() {
+		return "[class: Seguradora, nome: " + this.nome + ", telefone: " + this.telefone + ", email: " + this.email
+				+ ", endereco: " + this.endereco +
+				", lista de clientes:" + Util.listarApenasPk(this.listarClientes((data) -> true)) +
+				", lista de sinistros:" + Util.listarApenasPk(listarSinistros()) + " ]";
+	}
+
+	@Override
+	public String getPKAtribute() {
+		return this.nome;
+	}
+
+	@Override
+	public String[] atributos() {
+		return new String[] { "NOME", "TELEFONE", "EMAIL", "ENDERECO", "LISTA_CLIENTES", "LISTA_SEGUROS" };
+	}
+
 	public boolean cadastrarCliente(Cliente clienteNovo) {
 		if (clienteNovo != null)
 			return this.listaCliente.add(clienteNovo);
@@ -234,19 +252,6 @@ public class Seguradora implements Model {
 			receita += i.getValorMensal();
 		}
 		return receita;
-	}
-
-	@Override
-	public String toString() {
-		return "[class: Seguradora, nome: " + this.nome + ", telefone: " + this.telefone + ", email: " + this.email
-				+ ", endereco: " + this.endereco +
-				", lista de clientes:" + Util.listarApenasPk(this.listarClientes((data) -> true)) +
-				", lista de sinistros:" + Util.listarApenasPk(listarSinistros()) + " ]";
-	}
-
-	@Override
-	public String getPKAtribute() {
-		return this.nome;
 	}
 
 	public String getNome() {

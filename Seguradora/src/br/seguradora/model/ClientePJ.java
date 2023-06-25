@@ -3,7 +3,6 @@ package br.seguradora.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import br.seguradora.interfaces.Model;
 import br.seguradora.util.Util;
 
 public class ClientePJ extends Cliente {
@@ -59,6 +58,12 @@ public class ClientePJ extends Cliente {
 		return super.toString().substring(0, super.toString().length() - 1) + ", cnpj: " + this.getCodigoPessoa()
 				+ ", data de fundação: " + this.getDataFundacao() + ", quantidade de funcionarios: "
 				+ this.getQtdeFuncionarios() + ", frotas: " + Util.listarApenasPk(this.getListaFrotas()) + "]";
+	}
+
+	@Override
+	public String[] atributos() {
+		String[] lista = { "NOME", "ENDERECO", "CNPJ", "DATA_FUNDACAO", "QUANTIDADE_FUNCIONARIO", "LISTA_FROTA" };
+		return lista;
 	}
 
 	public boolean addFrota(Frota novoFrota) {
